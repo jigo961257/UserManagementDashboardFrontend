@@ -7,6 +7,7 @@ import RulesManagement from "./Dashboard/RulesManagement";
 import Reports from "./Dashboard/Reports";
 import Settings from "./Dashboard/Settings";
 import DashboardHome from "./Pages/DashboardHome";
+import Login from "./Pages/login";
 
 
 export default function App() {
@@ -23,6 +24,8 @@ export default function App() {
           <Route path="rules-management" element={<RulesManagement />} />
           <Route path="automation-management" element={<AutomationManagement />} />  
         </Route>
+                  <Route path="/" element={<Login />} />  
+
       </Routes>
     </BrowserRouter>
   );
