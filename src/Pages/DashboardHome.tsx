@@ -11,7 +11,7 @@ export default function DashboardHome() {
       <div className="text-xl font-semibold">
         Dashboard
       </div>
-      <div className="bg-gray-100 rounded p-3 shadow-md">
+      <div className="bg-gray-100">
         <p className="font-bold text-xs text-gray-800">Date: 17<sup>th</sup> June, 2025</p>
       </div>
     </div>
