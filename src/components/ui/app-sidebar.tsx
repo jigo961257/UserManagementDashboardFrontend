@@ -6,6 +6,7 @@ import {
   Settings,
   TableOfContents,
   User,
+  User2,
 } from "lucide-react";
 
 import {
@@ -46,6 +47,11 @@ const items = [
     title: "Automation Management",
     url: "/dashboard/automation-management",
     icon: Settings,
+  },
+  {
+    title: "Logout",
+    url: "/",
+    icon: User2,
   },
 ];
 

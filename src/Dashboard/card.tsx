@@ -66,9 +66,9 @@ export default function Cards() {
       value: (
         <>
           <span className="text-2xl font-bold">{data.totalEngagementTime.hours}</span>
-          <span className="ml-1 text-sm font-semibold">Hrs</span>
+          <span className="ml-1 text-xs font-thin ">Hrs</span>
           <span className="ml-2 text-xl font-bold">{data.totalEngagementTime.minutes}</span>
-          <span className="ml-1 text-sm font-semibold">Mins</span>
+          <span className="ml-1 text-xs font-thin ">Mins</span>
         </>
       ),
       // icon: <Clock className="w-8 h-8 text-black" />,
@@ -97,7 +97,7 @@ export default function Cards() {
           key={idx}
           className="border border-orange-300 rounded-md shadow-sm"
         >
-          <CardContent className="flex  justify-between py-4 pb-4 px-5  h-full">
+          <CardContent className="flex  justify-between pt-2 pb-4 px-5  h-full">
             <div className=" font-medium text-sm text-gray-700 leading-snug">
               {stat.title}
               <div className="text-2xl font-bold text-black">{stat.value}</div>

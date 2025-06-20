@@ -56,6 +56,7 @@ export default function LoginPage() {
         toast.error(response?.response.data?.message);
       }
     } catch (err: any) {
+      toast.error("server not connected");
       console.log(err);
     }
   };
@@ -123,9 +124,6 @@ export default function LoginPage() {
       className="min-h-screen flex items-center justify-center bg-red-500"
     >
       <Card className="w-full max-w-[500px] rounded-[22px] bg-[#FEFDF9] border-[0px] px-[46px] py-[114px] ">
-        {/* <CardHeader>
-          <CardTitle className="text-3xl text-center">Login</CardTitle>
-        </CardHeader> */}
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="text-center space-y-4">
             <div>

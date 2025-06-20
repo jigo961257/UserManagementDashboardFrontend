@@ -11,7 +11,6 @@ import {
   LabelList,
 } from "recharts";
 import { DashboardData } from "@/api/login/action";
-// import { getUserDistribution } from "@/api/dashboard/action"; // ✅ adjust path
 
 export default function UserDistributionChart() {
   const [data, setData] = useState([]);
@@ -32,8 +31,6 @@ export default function UserDistributionChart() {
     fetchData();
   }, []);
 
-  // const totalUsers = data.reduce((acc, cur) => acc + cur.users, 0);
-
   if (loading) {
     return (
       <Card className="border border-orange-300 rounded-md shadow-sm mt-5 ml-5">
@@ -45,9 +42,9 @@ export default function UserDistributionChart() {
   return (
     <div>
 
-        <h2 className="text-xl font-medium ml-5" style={{marginTop:"40px"}}>User Distribution</h2>
+        <h2 className="text-3xl font-[400] ml-5" style={{marginTop:"40px"}}>User Distribution</h2>
     <Card className="border border-orange-300 rounded-md shadow-sm mt-3 ml-5">
-      <CardContent className="p-6 space-y-4">
+      <CardContent className="px-12 py-8 space-y-4">
         <div>
           <p className="text-sm mb-1 font-semibold">
             Country-wise user distribution
