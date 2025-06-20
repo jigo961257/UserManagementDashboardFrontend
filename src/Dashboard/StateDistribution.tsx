@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { PieChart, Pie, Cell, Label } from "recharts";
+import { PieChart, Pie, Cell } from "recharts";
 
 const data = [
   { name: "State A", value: 25 },

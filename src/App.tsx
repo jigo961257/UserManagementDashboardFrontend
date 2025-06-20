@@ -1,23 +1,19 @@
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import { AppSidebar } from "./components/ui/app-sidebar"
-import DashboardStats from "./Dashboard/dashboard"
-import UserDistributionChart from "./Dashboard/userDistribution"
-import StateWisePieChart from "./Dashboard/StateDistribution"
-import TrendingContent from "./Dashboard/carsoul"
+import {Route,BrowserRouter,  Routes } from "react-router-dom";
+import Login from "./Pages/Login";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+import DashboardLayout from "./Pages/Dashboard";
+
+export default function App() {
   return (
-    <SidebarProvider >
-      <AppSidebar />
-      <main>
-        <SidebarTrigger />
-        {children}
-        <DashboardStats/>
-      <UserDistributionChart/>
-      <StateWisePieChart/>
-      <TrendingContent/>
-        {/* <Button/> */}
-      </main>
-    </SidebarProvider>
+    <>
+<BrowserRouter>
+<Routes>
+  <Route path="/" element={<Login/>}/>
+  <Route path="/dashboard" element={<DashboardLayout/>}/>
+  
+</Routes>
+</BrowserRouter>
+    </>
+   
   )
 }
