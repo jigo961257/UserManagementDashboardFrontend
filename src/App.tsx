@@ -8,25 +8,31 @@ import Reports from "./Dashboard/Reports";
 import Settings from "./Dashboard/Settings";
 import DashboardHome from "./Pages/DashboardHome";
 import Login from "./Pages/login";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route index element={<DashboardHome/>} /> 
-          <Route path="user-management" element={<UserMnagement />} />
-          <Route path="content-management" element={<ContentManagement />} />
-          <Route path="user-management" element={<UserMnagement />} />
-          <Route path="reports" element={<Reports />} />
-          <Route path="settings" element={<Settings />} />
-          <Route path="rules-management" element={<RulesManagement />} />
-          <Route path="automation-management" element={<AutomationManagement />} />  
-        </Route>
-                  <Route path="/" element={<Login />} />  
-
-      </Routes>
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/dashboard" element={<DashboardLayout />}>
+            <Route index element={<DashboardHome />} />
+            <Route path="user-management" element={<UserMnagement />} />
+            <Route path="content-management" element={<ContentManagement />} />
+            <Route path="user-management" element={<UserMnagement />} />
+            <Route path="reports" element={<Reports />} />
+            <Route path="settings" element={<Settings />} />
+            <Route path="rules-management" element={<RulesManagement />} />
+            <Route
+              path="automation-management"
+              element={<AutomationManagement />}
+            />
+          </Route>
+          <Route path="/" element={<Login />} />
+        </Routes>
+      </BrowserRouter>
+      <ToastContainer position="bottom-right" autoClose={3000} />
+    </>
   );
 }
