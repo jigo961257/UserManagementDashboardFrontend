@@ -92,7 +92,7 @@ trendingContent.videos || []);
                     <img
                       src={item.image}
                       alt={item.title}
-                      className="w-full h-[200px] object-fit rounded-sm"
+                      className="w-full h-[225px] object-fit rounded-sm"
                     />
                   </CardContent>
                 </Card>
