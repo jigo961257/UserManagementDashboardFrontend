@@ -1,24 +1,23 @@
-// src/Pages/Dashboard.tsx (this acts as a layout)
+// src/Pages/Dashboard.tsx
 
 import { AppSidebar } from "@/components/ui/app-sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { Outlet } from "react-router-dom";
 import DashboardHome from "./DashboardHome";
-
 
 export default function DashboardLayout() {
   return (
-    <>
     <SidebarProvider>
-      <AppSidebar />
-      <main className="p-4"> {/* default width of sidebar */}
-        {/* <SidebarTrigger /> */}
+      <div className="flex min-h-screen w-full"> {/* Flex wrapper added here */}
+        <AppSidebar />
 
-        <Outlet /> {/* This is where nested route content (children) will render */}
-        
-        <DashboardHome/>
-      </main>
-   </SidebarProvider>
-    </>
+        <main className="flex-1 p-4 overflow-auto">
+          <SidebarTrigger className="mb-4" />
+          
+          {/* If you're navigating between pages, use Outlet */}
+          {/* <Outlet /> */}
+          <DashboardHome />
+        </main>
+      </div>
+    </SidebarProvider>
   );
 }

@@ -11,5 +11,21 @@ export async function signin(data: any) {
     return response?.data;
   } catch (error) {
     console.error("Error during sign-in:", error);
+    
+    return error  }
+}
+
+export async function DashboardData() {
+  try {
+    const response = await makeRequest({
+      endpoint: "/dashboard/getall",
+      method: "GET",
+      isToken: false,
+    });
+    console.log(response);
+    return response?.data;
+  } catch (error) {
+    console.error("Error during sign-in:", error);
+    
     return error  }
 }

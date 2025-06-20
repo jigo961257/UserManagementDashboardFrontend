@@ -1,4 +1,5 @@
-import { Card, CardContent } from "@/components/ui/card"
+import { useEffect, useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   BarChart,
   Bar,
@@ -8,33 +9,52 @@ import {
   Tooltip,
   ResponsiveContainer,
   LabelList,
-} from "recharts"
-
-const data = [
-  { country: "United States", users: 3000 },
-  { country: "China", users: 1500 },
-  { country: "India", users: 2200 },
-  { country: "Germany", users: 3400 },
-  { country: "United Kingdom", users: 1800 },
-  { country: "France", users: 400 },
-  { country: "Japan", users: 6100 },
-  { country: "Canada", users: 1300 },
-  { country: "Australia", users: 4100 },
-  { country: "Brazil", users: 6800 },
-]
+} from "recharts";
+import { DashboardData } from "@/api/login/action";
+// import { getUserDistribution } from "@/api/dashboard/action"; // ✅ adjust path
 
 export default function UserDistributionChart() {
-  const totalUsers = data.reduce((acc, cur) => acc + cur.users, 0)
+  const [data, setData] = useState([]);
+  const [totalUsers, setTotalUsers] = useState(0);
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchData() {
+      const result = await DashboardData();
+      console.log(result);
+      if (result?.data?.userDistribution) {
+      setData(result.data.userDistribution.countries || []);
+      setTotalUsers(result.data.userDistribution.totalUsers || 0);
+    }
+      setLoading(false);
+    }
+    fetchData();
+  }, []);
+
+  // const totalUsers = data.reduce((acc, cur) => acc + cur.users, 0);
+
+  if (loading) {
+    return (
+      <Card className="border border-orange-300 rounded-md shadow-sm mt-5 ml-5">
+        <CardContent className="p-6">Loading chart...</CardContent>
+      </Card>
+    );
+  }
 
   return (
-    <Card className="border border-orange-300 rounded-md shadow-sm mt-5 ml-5">
+    <div>
+
+        <h2 className="text-xl font-medium ml-5" style={{marginTop:"40px"}}>User Distribution</h2>
+    <Card className="border border-orange-300 rounded-md shadow-sm mt-3 ml-5">
       <CardContent className="p-6 space-y-4">
-        <h2 className="text-xl font-semibold">User Distribution</h2>
         <div>
-          <p className="text-sm text-muted-foreground mb-1">
+          <p className="text-sm mb-1 font-semibold">
             Country-wise user distribution
           </p>
-          <p className="text-2xl font-bold text-black">{totalUsers.toLocaleString()}</p>
+          <p className="text-2xl font-bold text-black">
+            {totalUsers.toLocaleString()}
+          </p>
         </div>
 
         <div className="h-[400px]">
@@ -52,17 +72,18 @@ export default function UserDistributionChart() {
                 dataKey="users"
                 fill="url(#colorGradient)"
                 radius={[0, 10, 10, 0]}
-                // activeBar={false} // 👈 disables gray hover effect
-
                 barSize={12}
-                
               >
-<LabelList dataKey="users" position="right" formatter={(val: number) => val.toLocaleString()} />
+                <LabelList
+                  dataKey="users"
+                  position="right"
+                  formatter={(val: number) => val.toLocaleString()}
+                />
               </Bar>
               <defs>
                 <linearGradient id="colorGradient" x1="0" x2="1" y1="0" y2="0">
-                  <stop offset="0%" stopColor="#F97316" /> {/* orange */}
-                  <stop offset="100%" stopColor="#DC2626" /> {/* red */}
+                  <stop offset="0%" stopColor="#F97316" />
+                  <stop offset="100%" stopColor="#DC2626" />
                 </linearGradient>
               </defs>
             </BarChart>
@@ -70,5 +91,6 @@ export default function UserDistributionChart() {
         </div>
       </CardContent>
     </Card>
-  )
+    </div>
+  );
 }
