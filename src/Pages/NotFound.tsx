@@ -1,0 +1,22 @@
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+
+export default function NotFound() {
+  return (
+    <div className="h-screen flex items-center justify-center">
+      <div className="w-full pl-[280px]"> {/* match your sidebar width */}
+        <div className="flex items-center justify-center h-[calc(100vh-0px)]">
+          <div className="text-center px-4">
+            <h1 className="text-6xl font-bold text-orange-500 mb-4">404</h1>
+            <p className="text-xl text-gray-700 mb-6">
+              Oops! The page you’re looking for doesn’t exist.
+            </p>
+            <Button asChild className="bg-orange-500 hover:bg-orange-600 text-white">
+              <Link to="/dashboard">Go back to Dashboard</Link>
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

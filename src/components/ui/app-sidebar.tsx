@@ -1,4 +1,4 @@
-import { Calendar, Container, Home, Inbox, Ruler, Search, Settings, TableOfContents, User } from "lucide-react"
+import { Calendar, Container, Home, Inbox, LayoutDashboard, Ruler, Search, Settings, TableOfContents, User } from "lucide-react"
 
 import {
   Sidebar,
@@ -13,34 +13,32 @@ import {
 
 // Menu items.
 const items = [
-  {
-    title: "User Management",
-    url: "#",
-    icon: User,
-  },
+    { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
+  { title: "User Management", url: "/dashboard/user-management", icon: User },
+
   {
     title: "Content Management",
-    url: "#",
+    url: "/dashboard/content-management",
     icon: Container,
   },
   {
     title: "Reports",
-    url: "#",
+    url: "/dashboard/reports",
     icon: Calendar,
   },
   {
     title: "Settings",
-    url: "#",
+    url: "/dashboard/settings",
     icon: Settings,
   },
   {
     title: "Rules Management",
-    url: "#",
+    url: "/dashboard/rules-management",
     icon: TableOfContents,
   },
    {
     title: "Automation Management",
-    url: "#",
+    url: "/dashboard/automation-management",
     icon: Settings,
   },
 ]

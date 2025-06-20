@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { PieChart, Pie, Cell } from "recharts";
+import { PieChart, Pie, Cell, Tooltip } from "recharts";
 
 const data = [
   { name: "State A", value: 25 },
@@ -23,7 +23,7 @@ export default function StateWisePieChart() {
   const total = data.reduce((sum, item) => sum + item.value, 0);
 
   return (
-    <Card className="border border-orange-300 shadow-sm rounded-md">
+    <Card className="border border-orange-300 shadow-sm rounded-md mt-5 ml-5">
       <CardContent className="p-4">
         <div className="mb-2">
           <h2 className="text-md font-semibold">State-wise user distribution</h2>
@@ -47,6 +47,10 @@ export default function StateWisePieChart() {
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>
+             <Tooltip
+    formatter={(value: number) => [`${value.toLocaleString()} users`, 'Users']}
+    contentStyle={{  border: "1px solid grey" }}
+  />
           </PieChart>
         </div>
       </CardContent>

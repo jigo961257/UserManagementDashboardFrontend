@@ -27,7 +27,7 @@ export default function UserDistributionChart() {
   const totalUsers = data.reduce((acc, cur) => acc + cur.users, 0)
 
   return (
-    <Card className="border border-orange-300 rounded-md shadow-sm">
+    <Card className="border border-orange-300 rounded-md shadow-sm mt-5 ml-5">
       <CardContent className="p-6 space-y-4">
         <h2 className="text-xl font-semibold">User Distribution</h2>
         <div>
@@ -44,7 +44,7 @@ export default function UserDistributionChart() {
               data={data}
               margin={{ top: 10, right: 30, left: 50, bottom: 10 }}
             >
-              <CartesianGrid strokeDasharray="3 3" vertical={false} />
+              <CartesianGrid strokeDasharray="3 3" horizontal={false} />
               <XAxis type="number" tickFormatter={(val) => `${val / 1000}K`} />
               <YAxis dataKey="country" type="category" width={120} />
               <Tooltip />
@@ -52,6 +52,10 @@ export default function UserDistributionChart() {
                 dataKey="users"
                 fill="url(#colorGradient)"
                 radius={[0, 10, 10, 0]}
+                // activeBar={false} // 👈 disables gray hover effect
+
+                barSize={12}
+                
               >
 <LabelList dataKey="users" position="right" formatter={(val: number) => val.toLocaleString()} />
               </Bar>

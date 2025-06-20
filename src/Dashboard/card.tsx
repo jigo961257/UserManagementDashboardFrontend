@@ -44,7 +44,7 @@ const stats = [
 
 export default function Cards() {
   return (
-    <div className="grid grid-cols-3 ml-5 gap-4">
+    <div className="grid grid-cols-1 lg:grid-cols-3 ml-5 gap-4">
       {stats.map((stat, idx) => (
         <Card
           key={idx}

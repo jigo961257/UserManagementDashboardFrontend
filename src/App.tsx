@@ -1,19 +1,29 @@
-import {Route,BrowserRouter,  Routes } from "react-router-dom";
-import Login from "./Pages/Login";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import DashboardLayout from "@/Pages/sidebar"; // layout
+import UserMnagement from "./Dashboard/UserMnagement";
+import ContentManagement from "./Dashboard/ContentManagement";
+import AutomationManagement from "./Dashboard/AutomationManagement";
+import RulesManagement from "./Dashboard/RulesManagement";
+import Reports from "./Dashboard/Reports";
+import Settings from "./Dashboard/Settings";
+import DashboardHome from "./Pages/DashboardHome";
 
-import DashboardLayout from "./Pages/Dashboard";
 
 export default function App() {
   return (
-    <>
-<BrowserRouter>
-<Routes>
-  <Route path="/" element={<Login/>}/>
-  <Route path="/dashboard" element={<DashboardLayout/>}/>
-  
-</Routes>
-</BrowserRouter>
-    </>
-   
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/dashboard" element={<DashboardLayout />}>
+          <Route index element={<DashboardHome/>} /> 
+          <Route path="user-management" element={<UserMnagement />} />
+          <Route path="content-management" element={<ContentManagement />} />
+          <Route path="user-management" element={<UserMnagement />} />
+          <Route path="reports" element={<Reports />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="rules-management" element={<RulesManagement />} />
+          <Route path="automation-management" element={<AutomationManagement />} />  
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
