@@ -8,10 +8,13 @@ import Reports from "./Dashboard/Reports";
 import Settings from "./Dashboard/Settings";
 import Login from "./Pages/login";
 import DashboardLayout from "./Pages/Sidebar";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 export default function App() {
   return (
+    <>
     <BrowserRouter>
       <Routes>
         <Route path="/dashboard" element={<DashboardLayout />}>
@@ -28,5 +31,7 @@ export default function App() {
 
       </Routes>
     </BrowserRouter>
+     <ToastContainer position="bottom-right" autoClose={3000} />
+     </>
   );
 }
