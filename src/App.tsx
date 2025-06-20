@@ -1,11 +1,23 @@
-import React from 'react';
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { AppSidebar } from "./components/ui/app-sidebar"
+import DashboardStats from "./Dashboard/dashboard"
+import UserDistributionChart from "./Dashboard/userDistribution"
+import StateWisePieChart from "./Dashboard/StateDistribution"
+import TrendingContent from "./Dashboard/carsoul"
 
-const App = () => {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div>
-      Main app
-    </div>
-  );
+    <SidebarProvider >
+      <AppSidebar />
+      <main>
+        <SidebarTrigger />
+        {children}
+        <DashboardStats/>
+      <UserDistributionChart/>
+      <StateWisePieChart/>
+      <TrendingContent/>
+        {/* <Button/> */}
+      </main>
+    </SidebarProvider>
+  )
 }
-
-export default App;
