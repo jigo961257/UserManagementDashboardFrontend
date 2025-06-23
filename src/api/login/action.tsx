@@ -3,7 +3,7 @@ import makeRequest from "@/config/axios_instance";
 export async function signin(data: any) {
   try {
     const response = await makeRequest({
-      endpoint: "/user/login",
+      endpoint: "/auth/login",
       method: "POST",
       data,
       isToken: false,
@@ -33,7 +33,7 @@ export async function DashboardData() {
 export async function sendOtp(data: any) {
   try {
     const response = await makeRequest({
-      endpoint: "/user/sendotp",
+      endpoint: "/auth/sendotp",
       method: "POST",
       data,
       isToken: false,
@@ -47,7 +47,7 @@ export async function sendOtp(data: any) {
 export async function verifyOtp(data: any) {
   try {
     const response = await makeRequest({
-      endpoint: "/user/verifyotp",
+      endpoint: "/auth/verifyotp",
       method: "POST",
       data,
       isToken: false,

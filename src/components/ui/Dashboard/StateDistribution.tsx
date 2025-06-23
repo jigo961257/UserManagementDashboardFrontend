@@ -8,7 +8,7 @@ const COLORS = [
   "#f58231", "#0082c8", "#f032e6", "#fabebe", "#e6beff"
 ];
 
-export default function StateWisePieChart() {
+export default function StateDistribution() {
   const [data, setData] = useState([]);
   console.log(data);
   const [total, setTotal] = useState(0);

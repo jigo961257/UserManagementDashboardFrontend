@@ -1,9 +1,8 @@
-import NotFound from "@/Pages/NotFound";
 
 const UserMnagement = () => {
     return (
         <div>
-            <NotFound/>
+            {/* <NotFound/> */}
         </div>
     );
 }

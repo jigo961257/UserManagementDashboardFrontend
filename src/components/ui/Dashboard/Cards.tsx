@@ -1,12 +1,5 @@
 // src/components/Cards.tsx
 
-import {
-  GraduationCap,
-  Building2,
-  Clock,
-  Users,
-  UserCheck,
-} from "lucide-react";
 import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { DashboardData } from "@/api/login/action";

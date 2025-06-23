@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom";
 import {
   Calendar,
   Container,
-  LayoutDashboard,
+  
   Settings,
   TableOfContents,
   User,
@@ -21,39 +21,45 @@ import {
 
 // Menu items
 const items = [
-  { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
-  { title: "User Management", url: "/dashboard/user-management", icon: User },
+  // { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
+  { title: "User Management", url: "/user-management", icon: User },
   {
     title: "Content Management",
-    url: "/dashboard/content-management",
+    url: "/content-management",
     icon: Container,
   },
   {
     title: "Reports",
-    url: "/dashboard/reports",
+    url: "/reports",
     icon: Calendar,
   },
   {
     title: "Settings",
-    url: "/dashboard/settings",
+    url: "/settings",
     icon: Settings,
   },
   {
     title: "Rules Management",
-    url: "/dashboard/rules-management",
+    url: "/rules-management",
     icon: TableOfContents,
   },
   {
     title: "Automation Management",
-    url: "/dashboard/automation-management",
+    url: "/automation-management",
     icon: Settings,
   },
-  {
-    title: "Logout",
-    url: "/",
-    icon: User2,
-  },
+  // {
+  //   title: "Logout",
+  //   url: "/",
+  //   icon: User2,
+  // },
 ];
+
+const logoutItem = {
+  title: "Logout",
+  url: "/",
+  icon: User2,
+};
 
 export function AppSidebar() {
   const location = useLocation();
@@ -75,6 +81,14 @@ export function AppSidebar() {
                         className={`flex items-center space-x-2
                           "text-white font-semibold" : "text-gray-400"
                         }`}
+                                  onClick={() => {
+            if (item.title === "Logout") {
+              sessionStorage.removeItem("accessToken");
+              sessionStorage.removeItem("roleName");
+            }
+          }}
+         
+
                       >
                         <item.icon
                           className={`w-5 h-5 ${
@@ -87,6 +101,28 @@ export function AppSidebar() {
                   </SidebarMenuItem>
                 );
               })}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+          {/* Bottom Logout item */}
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu className="mb-5">
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <a
+                    href={logoutItem.url}
+                    onClick={() => {
+                      sessionStorage.removeItem("accessToken");
+                      sessionStorage.removeItem("roleName");
+                    }}
+                    className="flex items-center space-x-2 "
+                  >
+                    <logoutItem.icon className="w-5 h-5" />
+                    <span>{logoutItem.title}</span>
+                  </a>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

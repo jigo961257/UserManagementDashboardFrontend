@@ -12,7 +12,7 @@ import {
 } from "recharts";
 import { DashboardData } from "@/api/login/action";
 
-export default function UserDistributionChart() {
+export default function userDistribution() {
   const [data, setData] = useState([]);
   const [totalUsers, setTotalUsers] = useState(0);
 

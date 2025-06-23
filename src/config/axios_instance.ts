@@ -1,6 +1,11 @@
 import axios from "axios";
 // import { toast } from 'react-toastify';
 import type { AxiosInstance ,AxiosRequestConfig,AxiosResponse} from "axios";
+// import dotenv from "dotenv";
+// dotenv.config();
+
+// const PORT =process.env.PORT || 8001;
+
 
 // Define types for API response
 interface ApiResponse<T = any> {
@@ -65,7 +70,7 @@ const registerMock = <T>(
 const axiosInstance: AxiosInstance = axios.create({
   baseURL:
     import.meta.env.REACT_APP_API_URL ||
-    "http://localhost:8001",
+    `http://localhost:${import.meta.env.VITE_API_BASE_URL || 8001}`,
   timeout: 10000,
 });
 
