@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-// import DashboardLayout from "@/Pages/sidebar"; // layout
 import UserMnagement from "./components/ui/Dashboard/UserMnagement";
 import ContentManagement from "./components/ui/Dashboard/ContentManagement";
 import AutomationManagement from "./components/ui/Dashboard/AutomationManagement";
@@ -16,37 +15,37 @@ import NotFound from "./Pages/NotFound";
 
 
 export default function App() {
+
   return (
     <>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
-          {/* <Route index element={<DashboardHome/>} />  */}
-          <Route path="user-management" element={<UserMnagement />} />
-          <Route path="content-management" element={<ContentManagement />} />
-          <Route path="user-management" element={<UserMnagement />} />
-          <Route path="reports" element={<Reports />} />
-          <Route path="settings" element={<Settings />} />
-          <Route path="rules-management" element={<RulesManagement />} />
-          <Route path="automation-management" element={<AutomationManagement />} />  
-        </Route>
-                  <Route path="/login" element={<PublicRoute><LoginPage /></PublicRoute>} />  
-                  <Route path="/*" element={<NotFound/>} />  
-                  <Route
-  path="/login"
-  element={
-    sessionStorage.getItem("accessToken") ? (
-      <Navigate to="/user-management" replace />
-    ) : (
-      <Navigate to="/login" replace />
-    )
-  }
-/>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
+            <Route path="user-management" element={<UserMnagement />} />
+            <Route path="content-management" element={<ContentManagement />} />
+            <Route path="user-management" element={<UserMnagement />} />
+            <Route path="reports" element={<Reports />} />
+            <Route path="settings" element={<Settings />} />
+            <Route path="rules-management" element={<RulesManagement />} />
+            <Route path="automation-management" element={<AutomationManagement />} />
+          </Route>
+          <Route path="/login" element={<PublicRoute><LoginPage /></PublicRoute>} />
+          <Route path="/*" element={<NotFound />} />
+          <Route
+            path="/login"
+            element={
+              sessionStorage.getItem("accessToken") ? (
+                <Navigate to="/user-management" replace />
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
+          />
 
 
-      </Routes>
-    </BrowserRouter>
-     <ToastContainer position="bottom-right" autoClose={3000} />
-     </>
+        </Routes>
+      </BrowserRouter>
+      <ToastContainer position="bottom-right" autoClose={3000} />
+    </>
   );
 }

@@ -1,9 +1,6 @@
-// src/components/Cards.tsx
-
 import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { DashboardData } from "@/api/login/action";
-// import { DashboardData } from "@/api/dashboard"; // Adjust path if needed
 
 export default function Cards() {
   const [data, setData] = useState({
@@ -64,17 +61,14 @@ export default function Cards() {
           <span className="ml-1 text-xs font-thin ">Mins</span>
         </>
       ),
-      // icon: <Clock className="w-8 h-8 text-black" />,
     },
     {
       title: "Total Active Users",
       value: data.totalActiveUsers,
-      // icon: <Users className="w-8 h-8 text-black" />,
     },
     {
       title: "Active Users (24 Hrs)",
       value: data.activeUsers24hrs,
-      // icon: <UserCheck className="w-8 h-8 text-black" />,
       
     },
   ];

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Cards from "@/components/ui/Dashboard/Cards";
 import TrendingContent from "@/components/ui/Dashboard/TrendingContent";
 import StateDistribution from "@/components/ui/Dashboard/StateDistribution";
-import UserDistribution from "@/components/ui/Dashboard/userDistribution";
+import UserDistribution from "@/components/ui/Dashboard/UserDistribution";
 
 export default function DashboardHome() {
   const [roleName, setRoleName] = useState<string | null>("");

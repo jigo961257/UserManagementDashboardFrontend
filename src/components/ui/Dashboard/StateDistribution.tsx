@@ -14,29 +14,29 @@ export default function StateDistribution() {
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
 
- useEffect(() => {
-  async function fetchDistribution() {
-    const result = await DashboardData();
-    console.log("State Distribution:", result);
+  useEffect(() => {
+    async function fetchDistribution() {
+      const result = await DashboardData();
+      console.log("State Distribution:", result);
 
-    if (result?.data?.stateDistribution?.states) {
-      const formatted = result.data.stateDistribution.states.map((item:any) => ({
-        name: item.state,         // recharts needs `name` key
-        value: item.percentage,   // recharts uses `value` as size
-      }));
+      if (result?.data?.stateDistribution?.states) {
+        const formatted = result.data.stateDistribution.states.map((item: any) => ({
+          name: item.state,         // recharts needs `name` key
+          value: item.percentage,   // recharts uses `value` as size
+        }));
 
-      setData(formatted);
+        setData(formatted);
 
-      // Optional: Total percentage (usually 100), or calculate total users if available
-      const totalUsers = result.data.stateDistribution.totalUsers || 0;
-      setTotal(totalUsers);
+        // Optional: Total percentage (usually 100), or calculate total users if available
+        const totalUsers = result.data.stateDistribution.totalUsers || 0;
+        setTotal(totalUsers);
+      }
+
+      setLoading(false);
     }
 
-    setLoading(false);
-  }
-
-  fetchDistribution();
-}, []);
+    fetchDistribution();
+  }, []);
 
 
   if (loading) {
@@ -50,11 +50,8 @@ export default function StateDistribution() {
   return (
     <Card className="border border-orange-300 shadow-sm rounded-md mt-5 ml-5">
       <CardContent className="p-4">
-        {/* <div className="mb-2">
-          <h2 className="text-md font-semibold">State-wise user distribution</h2>
-          <p className="text-2xl font-bold">{total.toLocaleString()}</p>
-        </div> */}
- <div>
+
+        <div>
           <p className="text-sm mb-1 font-semibold">
             State-wise user distribution
           </p>

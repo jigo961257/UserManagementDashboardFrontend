@@ -9,10 +9,8 @@ import { Outlet } from "react-router-dom";
 export default function DashboardLayout() {
   const location = useLocation();
 
-  // Only render DashboardHome for /user-management path
-  const showDashboardHome = location.pathname === "/user-management";
-    // const showDashboardHome = ["/user-management", "/content-management"].includes(location.pathname);
-// 
+  const showDashboardHome = location.pathname === "/user-management" || location.pathname === "/";
+
 
   return (
     <SidebarProvider>
@@ -22,10 +20,8 @@ export default function DashboardLayout() {
         <main className="flex-1 p-4 overflow-auto">
           <SidebarTrigger className="mb-4" />
 
-          {/* Conditionally show DashboardHome only on user-management */}
           {showDashboardHome && <DashboardHome />}
 
-          {/* Always render nested route content */}
           <Outlet />
         </main>
       </div>

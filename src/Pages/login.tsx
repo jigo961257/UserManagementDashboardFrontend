@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import { signin, sendOtp, verifyOtp } from "@/api/login/action";
 import { Eye, EyeOff } from "lucide-react";
-import {watch} from 'fs';
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email"),
@@ -58,26 +57,10 @@ export default function LoginPage() {
 defaultValues: { email: ""},
   });
 
-  // const onSubmit = async (data: any) => {
-  //   try {
-  //     const response = await signin(data);
-  //     console.log("login data",response);
-  //     if (response?.status === true) {
-  //       sessionStorage.setItem("accessToken", response?.data?.token);
-  //       sessionStorage.setItem("roleName", response?.data?.roleName);
-  //       toast.success(response?.message);
-  //       navigate("/user-management");
-  //     } else {
-  //       toast.error(response?.response.data?.message);
-  //     }
-  //   } catch (err: any) {
-  //     toast.error("server not connected");
-  //     console.log(err);
-  //   }
-  // };
+ 
 const onSubmit = async (data: any) => {
   try {
-    // 👇 Optionally rename or assign roleName
+  
     const payload = {
       ...data,
       roleName: data.role, // if backend expects `roleName`

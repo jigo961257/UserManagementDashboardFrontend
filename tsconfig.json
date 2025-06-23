@@ -8,6 +8,16 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+     "lib": ["dom", "dom.iterable", "esnext"], 
+    "types": [
+      "jest", // <--- ADD THIS LINE
+      "node", // <--- Also good to have if you're using Node.js globals like 'process'
+      "@testing-library/jest-dom" // <--- Essential for custom matchers like toBeInTheDocument
+    ],
+    "jsx": "react-jsx", // Or "react" if you're not using the new JSX transform
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    
   }
 }
