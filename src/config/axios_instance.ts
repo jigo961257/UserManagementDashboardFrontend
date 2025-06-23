@@ -69,8 +69,8 @@ const registerMock = <T>(
 // Create base axios instance
 const axiosInstance: AxiosInstance = axios.create({
   baseURL:
-    import.meta.env.REACT_APP_API_URL ||
-    `http://localhost:${import.meta.env.VITE_API_BASE_URL || 8001}`,
+ 
+    `${import.meta.env.VITE_API_BASE_URL}`,
   timeout: 10000,
 });
 
