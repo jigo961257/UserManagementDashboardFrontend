@@ -21,7 +21,7 @@ export default function DashboardLayout() {
 //     role !== "Admin"; // Don't show for admin
 const showDashboardHome =
   (location.pathname === `/${role}/user-management` || location.pathname === "/") &&
-  !["admin", "superadmin"].includes(role); 
+  !("SuperAdmin").includes(role); 
 
   return (
     <SidebarProvider>
@@ -37,7 +37,7 @@ const showDashboardHome =
 
           {/* {showDashboardHome && <DashboardHome />} */}
       {showDashboardHome && (
-  role === "Admin" || "SuperAdmin" ? <ShowUserManagementPage /> : <DashboardHome />
+  role === "SuperAdmin" ? <ShowUserManagementPage /> : <DashboardHome />
 )}
 
 

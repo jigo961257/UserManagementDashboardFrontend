@@ -28,35 +28,30 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
-            {/* <Route index element={<DashboardHome />} /> This is your main dashboard home screen */}
-
-            <Route
-              path="/:role/user-management"
-              element={
-                (["Admin", "SuperAdmin"].includes(sessionStorage.getItem("roleName")))
-                  ? <ShowUserManagementPage />
-                  : <DashboardHome />
-              }
-            />
-
-            <Route path="/:role/view-profile" element={<ViewProfile />} />
-            {/* <Route path=":role/user-management" element={<UserMnagement />} /> */}
-            <Route path=":role/content-management" element={<ContentManagement />} />
-            <Route path=":role/reports" element={<Reports />} />
-            <Route path=":role/settings" element={<Settings />} />
-            <Route path=":role/rules-management" element={<RulesManagement />} />
-            <Route path=":role/automation-management" element={<AutomationManagement />} />
-            <Route path="/*" element={<NotFound />} />
+  {/* <Route index element={<DashboardHome />} /> This is your main dashboard home screen */}
+            <Route element={<RoleRoute allowedRoles={["SuperAdmin"]} />}>
+            <Route path="/:role/user-management" element={<ShowUserManagementPage/>} />
           </Route>
 
+        <Route path="/:role/view-profile" element={<ViewProfile />} />
+  {/* <Route path=":role/user-management" element={<UserMnagement />} /> */}
+  <Route path=":role/content-management" element={<ContentManagement />} />
+  <Route path=":role/reports" element={<Reports />} />
+  <Route path=":role/settings" element={<Settings />} />
+  <Route path=":role/rules-management" element={<RulesManagement />} />
+  <Route path=":role/automation-management" element={<AutomationManagement />} />
+          <Route path="/*" element={<NotFound />} />
+</Route>
+
           <Route path="/login" element={<PublicRoute><LoginPage /></PublicRoute>} />
-          <Route path="/register" element={<RegisterPage />} />
+          {/* <Route path="/register" element={<RegisterPage/>} /> */}
+          <Route path="/register" element={<PublicRoute><RegisterPage /></PublicRoute>} />
+
           <Route
             path="/login"
             element={
               sessionStorage.getItem("accessToken") ? (
-                <Navigate to={`/${sessionStorage.getItem("roleName")}/user-management`}
-                  replace />
+                <Navigate to="/:role/user-management" replace />
               ) : (
                 <Navigate to="/login" replace />
               )
