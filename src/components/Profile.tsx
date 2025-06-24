@@ -1,10 +1,9 @@
-import { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-// import { Card, CardContent } from "@/components/ui/card"; // ❌ Card components removed
 
 // API થી મળતા ડેટાના આધારે ઇન્ટરફેસ વ્યાખ્યાયિત કરો
 interface UserProfileData {
@@ -32,6 +31,7 @@ export default function ProfilePage() {
   const [profileData, setProfileData] = useState<UserProfileData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false); // Popover સ્ટેટ ઉમેર્યું
 
   const fetchProfileData = useCallback(async (id: string, roleName: string) => {
     setIsLoading(true);
@@ -39,7 +39,6 @@ export default function ProfilePage() {
     try {
       const token = sessionStorage.getItem("accessToken");
 
-      // ✅ axios.post નો સુધારેલો ઉપયોગ: ડેટા અને કન્ફિગ અલગ આર્ગ્યુમેન્ટ તરીકે
       const response = await axios.post<UserProfileData>(
         `http://localhost:8001/user/get/${id}`, // URL માં ID
         { roleName: roleName }, // ✅ POST વિનંતીની બોડી
@@ -51,7 +50,8 @@ export default function ProfilePage() {
         }
       );
       console.log("API Response:", response.data);
-      setProfileData(response.data);
+      // API રિસ્પોન્સમાં ડેટા પ્રોપર્ટી છે કે નહીં તે તપાસો
+      setProfileData(response.data.data || response.data); // જો data પ્રોપર્ટી હોય તો તે વાપરો, નહીંતર સીધું response.data
     } catch (err) {
       console.error("Error fetching profile data:", err);
       setError("Failed to load profile data.");
@@ -76,13 +76,14 @@ export default function ProfilePage() {
     } else {
       setIsLoading(false);
       setError("User role or ID not found. Please log in.");
-      // navigate('/login');
+      // navigate('/login'); // જો યુઝર લોગિન ન હોય તો રીડાયરેક્ટ કરી શકો છો
     }
   }, [fetchProfileData]);
 
   const handleViewProfileClick = () => {
     if (userRole) {
       navigate(`/${userRole}/view-profile`);
+      setIsPopoverOpen(false); // Popover બંધ કરો
     } else {
       navigate('/login');
       console.warn("Role not found in sessionStorage. Cannot navigate to profile.");
@@ -115,7 +116,7 @@ export default function ProfilePage() {
 
   return (
     <div className="p-4">
-      <Popover>
+      <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}> {/* Popover સ્ટેટને અહીંયા બાંધો */}
         <PopoverTrigger asChild>
           <Avatar className="w-12 h-12 cursor-pointer">
             {profileData.avatarImage ? (
@@ -130,62 +131,17 @@ export default function ProfilePage() {
 
         <PopoverContent className="w-80 p-4">
           <h3
-            className="text-lg font-semibold mb-2 cursor-pointer hover:text-blue-600" // mb-2 reduced margin
+            className="text-lg font-semibold mb-2 cursor-pointer hover:text-blue-600"
             onClick={handleViewProfileClick}
           >
             View Profile
           </h3>
           {/* Email ફક્ત અહીંયા PopoverContent માં બતાવો */}
           {profileData.email && (
-            <p className="text-gray-700 text-sm mb-4">Email: {profileData.email}</p> // Added margin-bottom
+            <p className="text-gray-700 text-sm mb-4">Email: {profileData.email}</p>
           )}
-
-          {/* બાકીનો પ્રોફાઇલ ડેટા જો તમે અહીંયા જ બતાવવા માંગતા હો તો ઉમેરો,
-              નહીંતર તેને ફક્ત View Profile Page માં જ બતાવો. */}
-          {/* ઉદાહરણ તરીકે:
-          {profileData.firstName && profileData.lastName && (
-            <p className="text-gray-700 text-sm">{profileData.firstName} {profileData.lastName}</p>
-          )}
-          {profileData.roleName && (
-            <p className="text-gray-700 text-sm">Role: {profileData.roleName}</p>
-          )}
-          */}
         </PopoverContent>
       </Popover>
-
-      {/* ❌ Card અને તેની અંદરનો ડેટા ડિસ્પ્લે કરતો કોડ અહીંથી દૂર કરવામાં આવ્યો છે */}
-      {/*
-      <Card className="mt-4 p-6 shadow-lg">
-        <CardContent className="space-y-2">
-          <p className="text-xl font-bold">{profileData.firstName} {profileData.lastName}</p>
-          <p className="text-gray-600 text-sm">{profileData.email}</p>
-          {profileData.bio && (
-            <p className="text-gray-700 text-sm">{profileData.bio}</p>
-          )}
-          {profileData._id && (
-            <p className="text-gray-700 text-sm">User ID: {profileData._id}</p>
-          )}
-          {profileData.roleName && (
-            <p className="text-gray-700 text-sm">Role: {profileData.roleName}</p>
-          )}
-          {userRole === "student" && profileData.studentId && (
-            <p className="text-gray-700 text-sm">Student ID: {profileData.studentId}</p>
-          )}
-          {userRole === "student" && profileData.major && (
-            <p className="text-gray-700 text-sm">Major: {profileData.major}</p>
-          )}
-          {userRole === "teacher" && profileData.employeeId && (
-            <p className="text-gray-700 text-sm">Employee ID: {profileData.employeeId}</p>
-          )}
-          {userRole === "teacher" && profileData.department && (
-            <p className="text-gray-700 text-sm">Department: {profileData.department}</p>
-          )}
-          {userRole === "teacher" && profileData.qualifications && (
-            <p className="text-gray-700 text-sm">Qualifications: {profileData.qualifications}</p>
-          )}
-        </CardContent>
-      </Card>
-      */}
     </div>
   );
 }

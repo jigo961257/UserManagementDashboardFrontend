@@ -11,6 +11,7 @@ import { Label } from "recharts"; // <-- આ લાઇન સાચી છે, �
 import { signup } from "@/api/login/action"; // ખાતરી કરો કે આ પાથ સાચો છે
 import { toast } from "react-toastify"; // ખાતરી કરો કે react-toastify ઇન્સ્ટોલ કરેલ છે અને ToastContainer સેટઅપ કરેલ છે
 import { useNavigate } from "react-router-dom";
+import { Eye, EyeOff } from "lucide-react";
 
 const schema = z
   .object({
@@ -30,6 +31,8 @@ type RegisterFormData = z.infer<typeof schema>;
 
 export default function RegisterPage() {
   const navigate = useNavigate();
+const [showPassword, setShowPassword] = useState(false);
+const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [submittedData, setSubmittedData] = useState<RegisterFormData | null>(null);
   console.log(submittedData); // આ ફક્ત ડીબગિંગ માટે છે, API કોલ પછી રીઅલ ડેટા આવશે
@@ -90,31 +93,57 @@ export default function RegisterPage() {
             <div>
               <Label value="email">Email</Label>
               <Input id="email" {...register("email")} type="email" placeholder="Email" />
+              
               {errors.email && (
                 <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
               )}
             </div>
 
             <div>
-              <Label value="password">Password</Label>
-              <Input id="password" {...register("password")} type="password" placeholder="Password" />
-              {errors.password && (
-                <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
-              )}
-            </div>
+  <Label value="password">Password</Label>
+  <div className="relative">
+    <Input
+      id="password"
+      {...register("password")}
+      type={showPassword ? "text" : "password"}
+      placeholder="Password"
+    />
+    <button
+      type="button"
+      onClick={() => setShowPassword((prev) => !prev)}
+      className="absolute inset-y-0 right-3 flex items-center text-gray-500"
+    >
+      {showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
+    </button>
+  </div>
+  {errors.password && (
+    <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
+  )}
+</div>
 
-            <div>
-              <Label value="confirmPassword">Confirm Password</Label>
-              <Input
-                id="confirmPassword"
-                {...register("confirmPassword")}
-                type="password"
-                placeholder="Confirm Password"
-              />
-              {errors.confirmPassword && (
-                <p className="text-red-500 text-sm mt-1">{errors.confirmPassword.message}</p>
-              )}
-            </div>
+
+           <div>
+  <Label value="confirmPassword">Confirm Password</Label>
+  <div className="relative">
+    <Input
+      id="confirmPassword"
+      {...register("confirmPassword")}
+      type={showConfirmPassword ? "text" : "password"}
+      placeholder="Confirm Password"
+    />
+    <button
+      type="button"
+      onClick={() => setShowConfirmPassword((prev) => !prev)}
+      className="absolute inset-y-0 right-3 flex items-center text-gray-500"
+    >
+      {showConfirmPassword ? <Eye size={18} /> : <EyeOff size={18} />}
+    </button>
+  </div>
+  {errors.confirmPassword && (
+    <p className="text-red-500 text-sm mt-1">{errors.confirmPassword.message}</p>
+  )}
+</div>
+
             <div>
               <Label value="roleName">roleName</Label>
               <select

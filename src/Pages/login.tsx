@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import { signin, sendOtp, verifyOtp } from "@/api/login/action";
 import { Eye, EyeOff } from "lucide-react";
@@ -252,8 +252,19 @@ const disableOtpForm = !!watch("email") || !!watch("password") ; // Disable rese
             >
               {isSubmitting ? "Logging in..." : "Login"}
             </Button>
+            
           </form>
           <div className="text-center font-[700] text-[14px]">OR</div>
+          <div className="text-center mt-4 text-sm text-gray-600">
+  Don't have an account?{" "}
+  <Link
+    to="/register"
+    className="text-[#FE6C01] font-semibold hover:underline"
+  >
+    Register here
+  </Link>
+</div>
+
           <div className="mt-2  pt-2 space-y-3">
             {!showOtp && (
               <form

@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
 export default function NotFound() {
-  const role = sessionStorage.getItem("roleName")?.toLowerCase() || "admin"; // fallback to 'admin' if null
+  const role = sessionStorage.getItem("roleName") || "Admin"; // fallback to 'admin' if null
 
   return (
     <div className="h-screen flex items-center justify-center">
