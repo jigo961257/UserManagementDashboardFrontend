@@ -19,14 +19,14 @@ interface UserProfileData {
   id?: number; // જો API response માં 'id' નંબર તરીકે હોય (તમારા કન્સોલ લોગ મુજબ)
   roleName?: string; // જેમ કે "Student", "Teacher", "Admin"
   role_id?:number,
-  mothername?:string;
-  fathername?:string;
+  mother_name?:string;
+  father_name?:string;
   // અન્ય કોઈ પણ ફીલ્ડ્સ જે બેકએન્ડ મોકલે છે તે અહીં ઉમેરો
 }
 
 const ViewProfile = () => {
   const navigate = useNavigate();
-  const [profileData, setProfileData] = useState<UserProfileData | null>(null);
+  const [profileData, setProfileData] = useState<any | null>(null);
   console.log("Current profileData state:", profileData); // ડીબગિંગ માટે
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -112,110 +112,203 @@ const ViewProfile = () => {
 
   return (
     <div className="p-8 ">
-      <h2 className="text-3xl font-bold text-gray-800 mb-6">{roleName} Profile</h2>
+      {/* <h2 className="text-3xl font-bold text-gray-800 mb-6">
+        {roleName} Profile
+      </h2> */}
 
-      <div className="bg-white shadow-md rounded-lg p-6">
+      {/* <div className="bg-white shadow-md rounded-lg p-6">
         <table className="min-w-full divide-y divide-gray-200">
           <tbody className="bg-white divide-y divide-gray-200">
-            {/* First Name અને Last Name ને સૌથી ઉપર લાવ્યા છીએ */}
-            {profileData.firstName && (
+            {profileData.first_name && (
               <tr>
-                <td className="px-6 py-3 text-sm font-medium text-gray-700 w-1/3">First Name:</td>
-                <td className="px-6 py-3 text-sm text-gray-900">{profileData.firstName}</td>
-              </tr>
-            )}
-            {profileData.lastName && (
-              <tr>
-                <td className="px-6 py-3 text-sm font-medium text-gray-700 w-1/3">Last Name:</td>
-                <td className="px-6 py-3 text-sm text-gray-900">{profileData.lastName}</td>
-              </tr>
-            )}
-
-            {/* અવતાર ઇમેજ (પ્રોફાઇલ પિક્ચર) */}
-            {profileData.avatarImage && (
-              <tr>
-                <td className="px-6 py-3 text-sm font-medium text-gray-700 w-1/3">Profile Picture:</td>
+                <td className="px-6 py-3 text-sm font-medium text-gray-700 w-1/3">
+                  First Name:
+                </td>
                 <td className="px-6 py-3 text-sm text-gray-900">
-                  <img
-                    src={profileData.avatarImage}
-                    alt={`${profileData.firstName}'s avatar`}
-                    className="w-24 h-24 rounded-full object-cover border-2 border-gray-300"
-                  />
+                  {profileData.first_name}
+                </td>
+              </tr>
+            )}
+            {profileData.last_name && (
+              <tr>
+                <td className="px-6 py-3 text-sm font-medium text-gray-700 w-1/3">
+                  Last Name:
+                </td>
+                <td className="px-6 py-3 text-sm text-gray-900">
+                  {profileData.last_name}
                 </td>
               </tr>
             )}
 
-            {/* બાકીના સામાન્ય પ્રોફાઇલ ફીલ્ડ્સ */}
+              <tr>
+                <td className="px-6 py-3 text-sm font-medium text-gray-700 w-1/3">
+                  Profile Picture:
+                </td>
+                <td className="px-6 py-3 text-sm text-gray-900">
+                  <img
+                    src={profileData.avatarImage}
+                    // alt={`${profileData.firstName}'s avatar`}
+                    className="w-24 h-24 rounded-full object-cover border-2 border-gray-300"
+                  />
+                </td>
+              </tr>
+
             {profileData.email && (
               <tr>
-                <td className="px-6 py-3 text-sm font-medium text-gray-700 w-1/3">Email:</td>
-                <td className="px-6 py-3 text-sm text-gray-900">{profileData.email}</td>
+                <td className="px-6 py-3 text-sm font-medium text-gray-700 w-1/3">
+                  Email:
+                </td>
+                <td className="px-6 py-3 text-sm text-gray-900">
+                  {profileData.email}
+                </td>
               </tr>
             )}
-            {profileData.role_id && (
-              <tr>
-                <td className="px-6 py-3 text-sm font-medium text-gray-700 w-1/3">Role:</td>
-                <td className="px-6 py-3 text-sm text-gray-900 capitalize">{profileData.roleName}</td>
-              </tr>
+            {roleName === "Student" && (
+              <>
+                <tr>
+                  <td className="px-6 py-3 text-sm font-medium text-gray-700 w-1/3">
+                    Father Name:
+                  </td>
+                  <td className="px-6 py-3 text-sm text-gray-900">
+                    {profileData.father_name ? profileData?.father_name : "-"}
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-6 py-3 text-sm font-medium text-gray-700 w-1/3">
+                    Mother Name:
+                  </td>
+                  <td className="px-6 py-3 text-sm text-gray-900">
+                    {profileData.mother_name ? profileData?.mother_name : "-"}
+                  </td>
+                </tr>
+
+                <tr>
+                  <td className="px-6 py-3 text-sm font-medium text-gray-700 w-1/3">
+                    Current Class:
+                  </td>
+                  <td className="px-6 py-3 text-sm text-gray-900">
+                    {profileData.current_class
+                      ? profileData?.current_class
+                      : "-"}
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-6 py-3 text-sm font-medium text-gray-700 w-1/3">
+                    Current Entity:
+                  </td>
+                  <td className="px-6 py-3 text-sm text-gray-900">
+                    {profileData.current_entity
+                      ? profileData.current_entity
+                      : "-"}
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-6 py-3 text-sm font-medium text-gray-700 w-1/3">
+                    Current Section:
+                  </td>
+                  <td className="px-6 py-3 text-sm text-gray-900">
+                    {profileData.current_section
+                      ? profileData.current_section
+                      : "-"}
+                  </td>
+                </tr>
+              </>
             )}
-            {/* {profileData.bio && (
+            {roleName === "Parent" && (
               <tr>
-                <td className="px-6 py-3 text-sm font-medium text-gray-700 w-1/3">Bio:</td>
-                <td className="px-6 py-3 text-sm text-gray-900">{profileData.bio}</td>
-              </tr>
-            )} */}
-            {profileData._id && (
-              <tr>
-                <td className="px-6 py-3 text-sm font-medium text-gray-700 w-1/3">Database ID (_id):</td>
-                <td className="px-6 py-3 text-sm text-gray-900">{profileData._id}</td>
-              </tr>
-            )}
-            {profileData.id && (
-              <tr>
-                <td className="px-6 py-3 text-sm font-medium text-gray-700 w-1/3">User ID (from API):</td>
-                <td className="px-6 py-3 text-sm text-gray-900">{profileData.id}</td>
+                <td className="px-6 py-3 text-sm font-medium text-gray-700 w-1/3">
+                  Relation with Student:
+                </td>
+                <td className="px-6 py-3 text-sm text-gray-900">
+                  {profileData.relationship_to_student
+                    ? profileData.relationship_to_student
+                    : "-"}
+                </td>
               </tr>
             )}
 
-            {/* રોલ-વિશિષ્ટ ફીલ્ડ્સ */}
-            {currentRole === "Student" && profileData.studentId && (
-              <tr>
-                <td className="px-6 py-3 text-sm font-medium text-gray-700 w-1/3">Student ID:</td>
-                <td className="px-6 py-3 text-sm text-gray-900">{profileData.studentId}</td>
-              </tr>
-            )}
-            {currentRole === "Student" && profileData.currennt_class && (
-              <tr>
-                <td className="px-6 py-3 text-sm font-medium text-gray-700 w-1/3">Major:</td>
-                <td className="px-6 py-3 text-sm text-gray-900">{profileData.currennt_class}</td>
-              </tr>
-            )}
-
-            {currentRole === "Teacher" && profileData.employeeId && (
-              <tr>
-                <td className="px-6 py-3 text-sm font-medium text-gray-700 w-1/3">Employee ID:</td>
-                <td className="px-6 py-3 text-sm text-gray-900">{profileData.employeeId}</td>
-              </tr>
-            )}
-            {currentRole === "Teacher" && profileData.department && (
-              <tr>
-                <td className="px-6 py-3 text-sm font-medium text-gray-700 w-1/3">Department:</td>
-                <td className="px-6 py-3 text-sm text-gray-900">{profileData.department}</td>
-              </tr>
-            )}
-            {currentRole === "Teacher" && profileData.qualifications && (
-              <tr>
-                <td className="px-6 py-3 text-sm font-medium text-gray-700 w-1/3">Qualifications:</td>
-                <td className="px-6 py-3 text-sm text-gray-900">{profileData.qualifications}</td>
-              </tr>
-            )}
-
-            {currentRole === "Admin" && (
-                <></>
-            )}
           </tbody>
         </table>
-      </div>
+      </div> */}
+      <div className="p-8 flex flex-col items-center">
+  <h2 className="text-3xl font-bold text-gray-800 mb-6">{roleName} Profile</h2>
+
+  <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-xl text-center">
+    {/* Profile Picture */}
+    <div className="flex justify-center mb-4">
+      <img
+        src={profileData.avatarImage || "/default-avatar.png"} // fallback image if none
+        // alt={`${profileData.first_name}'s avatar`}
+        className="w-32 h-32 rounded-full object-cover border-4 border-gray-300"
+      />
+    </div>
+
+    {/* Name and Email */}
+    <h3 className="text-2xl font-semibold text-gray-900">{profileData.first_name} {profileData.last_name}</h3>
+    <p className="text-gray-500 mb-6">{profileData.email}</p>
+
+    {/* Profile Details Table */}
+    <div className="overflow-x-auto">
+      <table className="min-w-full divide-y divide-gray-200 text-left">
+        <tbody className="divide-y divide-gray-200">
+          {/* Common Fields */}
+          {profileData.father_name && (
+            <tr>
+              <td className="py-2 font-medium text-gray-700 w-1/3">Father Name:</td>
+              <td className="py-2 text-gray-900">{profileData.father_name}</td>
+            </tr>
+          )}
+          {profileData.mother_name && (
+            <tr>
+              <td className="py-2 font-medium text-gray-700 w-1/3">Mother Name:</td>
+              <td className="py-2 text-gray-900">{profileData.mother_name}</td>
+            </tr>
+          )}
+          {/* Student Fields */}
+          {roleName === "Student" && (
+            <>
+              <tr>
+                <td className="py-2 font-medium text-gray-700">Current Class:</td>
+                <td className="py-2 text-gray-900">{profileData.current_class || "-"}</td>
+              </tr>
+              <tr>
+                <td className="py-2 font-medium text-gray-700">Current Entity:</td>
+                <td className="py-2 text-gray-900">{profileData.current_entity || "-"}</td>
+              </tr>
+              <tr>
+                <td className="py-2 font-medium text-gray-700">Current Section:</td>
+                <td className="py-2 text-gray-900">{profileData.current_section || "-"}</td>
+              </tr>
+            </>
+          )}
+
+          {/* Parent Fields */}
+          {roleName === "Parent" && (
+            <tr>
+              <td className="py-2 font-medium text-gray-700">Relation with Student:</td>
+              <td className="py-2 text-gray-900">{profileData.relationship_to_student || "-"}</td>
+            </tr>
+          )}
+
+          {/* Teacher Fields */}
+          {roleName === "Teacher" && (
+            <>
+              <tr>
+                <td className="py-2 font-medium text-gray-700">Current Entity:</td>
+                <td className="py-2 text-gray-900">{profileData.current_entity || "-"}</td>
+              </tr>
+              <tr>
+                <td className="py-2 font-medium text-gray-700">Subject:</td>
+                <td className="py-2 text-gray-900">{profileData.subject_taught || "-"}</td>
+              </tr>
+            </>
+          )}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
     </div>
   );
 }
