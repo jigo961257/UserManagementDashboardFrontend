@@ -63,7 +63,7 @@ const logoutItem = {
 
 export function AppSidebar() {
   const location = useLocation();
-  const role = (sessionStorage.getItem("roleName") || "").toLowerCase();
+  const role = (sessionStorage.getItem("roleName") || "");
 
 
   return (

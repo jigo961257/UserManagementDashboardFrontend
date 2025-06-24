@@ -70,7 +70,7 @@ const onSubmit = async (data: any) => {
     console.log("login data", response);
 
     if (response?.status === true) {
-  const role = response?.data?.roleName?.toLowerCase(); // lowercase for consistency
+  const role = response?.data?.roleName; // lowercase for consistency
   sessionStorage.setItem("accessToken", response?.data?.token);
   sessionStorage.setItem("roleName", response?.data?.roleName);
 sessionStorage.setItem("user_id", response?.data?.user_id);
