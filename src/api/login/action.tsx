@@ -14,6 +14,21 @@ export async function signin(data: any) {
     
     return error  }
 }
+export async function signup(data: any) {
+  try {
+    const response = await makeRequest({
+      endpoint: "/auth/register", // Replace with your actual endpoint
+      method: "POST",
+      data,
+      isToken: false,
+    });
+
+    return response?.data;
+  } catch (error) {
+    console.error("Error during sign-up:", error);
+    return error;
+  }
+}
 
 export async function DashboardData() {
   try {

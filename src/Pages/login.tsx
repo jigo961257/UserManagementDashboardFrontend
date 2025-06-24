@@ -70,11 +70,14 @@ const onSubmit = async (data: any) => {
     console.log("login data", response);
 
     if (response?.status === true) {
-      sessionStorage.setItem("accessToken", response?.data?.token);
-      sessionStorage.setItem("roleName", response?.data?.roleName);
-      toast.success(response?.message);
-      navigate("/user-management");
-    } else {
+  const role = response?.data?.roleName?.toLowerCase(); // lowercase for consistency
+  sessionStorage.setItem("accessToken", response?.data?.token);
+  sessionStorage.setItem("roleName", response?.data?.roleName);
+sessionStorage.setItem("user_id", response?.data?.user_id);
+  toast.success(response?.message);
+  navigate(`/${role}/user-management`); // 👈 Dynamic route based on role
+}
+ else {
       toast.error(response?.response.data?.message);
     }
   } catch (err: any) {
@@ -135,7 +138,7 @@ const handleResendOtp = async (data: any) => {
       sessionStorage.setItem("accessToken", response?.data?.token);
       sessionStorage.setItem("roleName", response?.data?.roleName);
       toast.success(response?.message);
-      navigate("/user-management");
+      navigate(`/${roleName}/user-management`);
     } else {
       const errorMessage = response?.response?.data?.message || "Invalid OTP";
       setOtpError(errorMessage);
@@ -228,6 +231,7 @@ const disableOtpForm = !!watch("email") || !!watch("password") ; // Disable rese
      <option value="" disabled>
       Select Role
     </option>
+    <option value="SuperAdmin">SuperAdmin</option>
     <option value="Admin">Admin</option>
     <option value="Teacher">Teacher</option>
     <option value="Student">Student</option>

@@ -12,6 +12,13 @@ import ProtectedRoute from "./Pages/ProtectedRoute";
 import PublicRoute from "./Pages/PublicRoute";
 import LoginPage from "./Pages/login";
 import NotFound from "./Pages/NotFound";
+import RegisterPage from "./Pages/Register";
+import DashboardHome from "./Pages/DashboardHome";
+import UserManagementPage from "./components/ui/AdminDashboard/ShowUserMnagement";
+import RoleRoute from "./Pages/RoleRoute";
+import ShowUserManagementPage from "./components/ui/AdminDashboard/ShowUserMnagement";
+import ProfilePage from "./components/Profile";
+import ViewProfile from "./Pages/ViewProfile";
 
 
 export default function App() {
@@ -21,21 +28,35 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
-            <Route path="user-management" element={<UserMnagement />} />
-            <Route path="content-management" element={<ContentManagement />} />
-            <Route path="user-management" element={<UserMnagement />} />
-            <Route path="reports" element={<Reports />} />
-            <Route path="settings" element={<Settings />} />
-            <Route path="rules-management" element={<RulesManagement />} />
-            <Route path="automation-management" element={<AutomationManagement />} />
+            {/* <Route index element={<DashboardHome />} /> This is your main dashboard home screen */}
+
+            <Route
+              path="/:role/user-management"
+              element={
+                (["Admin", "SuperAdmin"].includes(sessionStorage.getItem("roleName")))
+                  ? <ShowUserManagementPage />
+                  : <DashboardHome />
+              }
+            />
+
+            <Route path="/:role/view-profile" element={<ViewProfile />} />
+            {/* <Route path=":role/user-management" element={<UserMnagement />} /> */}
+            <Route path=":role/content-management" element={<ContentManagement />} />
+            <Route path=":role/reports" element={<Reports />} />
+            <Route path=":role/settings" element={<Settings />} />
+            <Route path=":role/rules-management" element={<RulesManagement />} />
+            <Route path=":role/automation-management" element={<AutomationManagement />} />
+            <Route path="/*" element={<NotFound />} />
           </Route>
+
           <Route path="/login" element={<PublicRoute><LoginPage /></PublicRoute>} />
-          <Route path="/*" element={<NotFound />} />
+          <Route path="/register" element={<RegisterPage />} />
           <Route
             path="/login"
             element={
               sessionStorage.getItem("accessToken") ? (
-                <Navigate to="/user-management" replace />
+                <Navigate to={`/${sessionStorage.getItem("roleName")}/user-management`}
+                  replace />
               ) : (
                 <Navigate to="/login" replace />
               )

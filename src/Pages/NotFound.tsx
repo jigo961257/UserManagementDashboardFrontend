@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
 export default function NotFound() {
+  const role = sessionStorage.getItem("roleName")?.toLowerCase() || "admin"; // fallback to 'admin' if null
+
   return (
     <div className="h-screen flex items-center justify-center">
       <div className="w-full"> 
@@ -12,7 +14,7 @@ export default function NotFound() {
               Oops! The page you’re looking for doesn’t exist.
             </p>
             <Button asChild className="bg-orange-500 hover:bg-orange-600 text-white">
-              <Link to="/user-management">Go back to Dashboard</Link>
+              <Link to={`/${role}/user-management`}>Go back to Dashboard</Link>
             </Button>
           </div>
         </div>

@@ -22,30 +22,30 @@ import {
 // Menu items
 const items = [
   // { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
-  { title: "User Management", url: "/user-management", icon: User },
+  { title: "User Management", url: "user-management", icon: User },
   {
     title: "Content Management",
-    url: "/content-management",
+    url: "content-management",
     icon: Container,
   },
   {
     title: "Reports",
-    url: "/reports",
+    url: "reports",
     icon: Calendar,
   },
   {
     title: "Settings",
-    url: "/settings",
+    url: "settings",
     icon: Settings,
   },
   {
     title: "Rules Management",
-    url: "/rules-management",
+    url: "rules-management",
     icon: TableOfContents,
   },
   {
     title: "Automation Management",
-    url: "/automation-management",
+    url: "automation-management",
     icon: Settings,
   },
   // {
@@ -63,6 +63,8 @@ const logoutItem = {
 
 export function AppSidebar() {
   const location = useLocation();
+  const role = (sessionStorage.getItem("roleName") || "").toLowerCase();
+
 
   return (
     <Sidebar className="text-white">
@@ -72,12 +74,13 @@ export function AppSidebar() {
             <SidebarMenu className="mt-5">
               {items.map((item) => {
                 const isActive = location.pathname === item.url;
+                console.log(isActive);
 
                 return (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild>
                       <a
-                        href={item.url}
+                         href={`/${role}/${item.url}`} 
                         className={`flex items-center space-x-2
                           "text-white font-semibold" : "text-gray-400"
                         }`}
