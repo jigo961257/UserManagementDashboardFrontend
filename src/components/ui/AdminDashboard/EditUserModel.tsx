@@ -9,7 +9,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 // Corrected Label import - assuming Label is from your UI library, not 'recharts'
-import { Label } from "recharts";
+import { Label } from "@/components/ui/label";
 import { toast } from 'react-toastify';
 import axios from 'axios'; // Import axios for API calls
 import { Loader2 } from 'lucide-react'; // Import Loader2 for loading indicator
@@ -203,7 +203,7 @@ export default function EditUserModal({
               <Button variant="outline" onClick={onClose} disabled={isSaving}>
                 Cancel
               </Button>
-              <Button onClick={handleSave} disabled={isSaving}>
+              <Button className="bg-orange-600" onClick={handleSave} disabled={isSaving}>
                 {isSaving ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Saving...

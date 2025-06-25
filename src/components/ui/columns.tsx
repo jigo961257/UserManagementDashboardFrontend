@@ -1,13 +1,14 @@
 import { ColumnDef } from "@tanstack/react-table";
-// Make sure this path is correct for your User interface
-import { User } from "./AdminDashboard/ShowUserMnagement"; 
+import { User } from "./AdminDashboard/ShowUserMnagement";
+import { Button } from "@/components/ui/button"; // Assuming Button component is available here
 
 interface ColumnProps {
   onEdit: (user: User) => void;
-  onDelete: (user: User) => void; // NEW: Add onDelete handler
+  onDelete: (user: User) => void;
+  onToggleStatus: (user: User) => void; // NEW: Add onToggleStatus handler
 }
 
-export const getColumns = ({ onEdit, onDelete }: ColumnProps): ColumnDef<User>[] => [
+export const getColumns = ({ onEdit, onDelete, onToggleStatus }: ColumnProps): ColumnDef<User>[] => [
   {
     accessorKey: "first_name",
     header: "First Name",
@@ -20,41 +21,51 @@ export const getColumns = ({ onEdit, onDelete }: ColumnProps): ColumnDef<User>[]
     accessorKey: "email",
     header: "Email",
   },
-  {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => {
-      const status = row.original.status;
-      const isActive = status?.toLowerCase() === "active";
-      return (
-        <span
-          className={`px-2 py-1 rounded-full text-sm font-medium ${
-            isActive ? "bg-green-100 text-green-700" : "bg-gray-200 text-gray-700"
-          }`}
-        >
-          {status ?? "NA"}
-        </span>
-      );
-    },
+ // src/components/columns.tsx માંથી
+{
+  accessorKey: "status",
+  header: "Status",
+  cell: ({ row }) => {
+    const user = row.original;
+    const status = user.status;
+    const isActive = status?.toLowerCase() === "active";
+    return (
+      <Button
+        // ... અન્ય પ્રોપ્સ ...
+        onClick={() => onToggleStatus(user)} // આ ક્લિક હેન્ડલર છે
+        className={`
+
+          ${isActive ? "bg-green-100 text-green-700" : "bg-gray-200 text-gray-700"}
+                    ${isActive ? "hover:bg-green-100 text-green-700" : "hover:bg-gray-200 text-gray-700"}
+
+
+        `}
+      >
+        {status ?? "NA"}
+      </Button>
+    );
   },
+},
   {
     header: "Action",
     cell: ({ row }) => {
       const user = row.original;
       return (
         <div className="flex gap-2">
-          <button
+          <Button
             onClick={() => onEdit(user)}
-            className="text-blue-600 hover:underline"
+            variant="outline" // Use Button component for consistency
+            size="sm" className="bg-green-800 text-white hover:bg-green-800 hover:text-white"
           >
             Edit
-          </button>
-          <button
-            onClick={() => onDelete(user)} // NEW: Call onDelete handler
-            className="text-red-600 hover:underline"
+          </Button>
+          <Button
+            onClick={() => onDelete(user)}
+            variant="destructive" // Use Button component for consistency
+            size="sm"
           >
             Delete
-          </button>
+          </Button>
         </div>
       );
     },

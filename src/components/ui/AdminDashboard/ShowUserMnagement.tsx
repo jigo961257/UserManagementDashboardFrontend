@@ -30,7 +30,7 @@ const TABS = ["users", "SuperAdmin", "Admin", "Teacher", "Student", "Parent"];
 export default function ShowUserManagementPage() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState("SuperAdmin");
+  const [activeTab, setActiveTab] = useState("users");
   const [searchTerm, setSearchTerm] = useState("");
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -124,6 +124,36 @@ export default function ShowUserManagementPage() {
       }
     }
   };
+  
+  // src/components/ui/AdminDashboard/ShowUserMnagement.tsx માંથી
+const handleToggleStatus = async (user: User) => {
+  // અહીં લોજીક છે જે active ને inactive અને inactive ને active માં બદલે છે
+  const newStatus = user.status === "Active" ? "Inactive" : "Active";
+  const token = sessionStorage.getItem("accessToken");
+
+  try {
+    const response = await axios.post<{ status: boolean, message: string, data: User }>(
+      `http://localhost:8001/user/updatestatus/${user.id}`,
+      { status: newStatus }, // નવું સ્ટેટસ બેકએન્ડને મોકલે છે
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    if (response.data.status === true) {
+      toast.success(`User ${user.first_name} status updated to ${newStatus}!`);
+      fetchUsers(activeTab); // ડેટાને ફરીથી ફેચ કરીને ટેબલને તાજું કરે છે
+    } else {
+      toast.error(response.data.message || "Failed to update user status.");
+    }
+  } catch (error: any) {
+    console.error("Error updating user status:", error);
+    toast.error(error.response?.data?.message || "An error occurred while updating status.");
+  }
+};
 
   const filteredUsers = users.filter((user) => {
     const search = searchTerm.toLowerCase();
@@ -171,6 +201,7 @@ export default function ShowUserManagementPage() {
                   columns={getColumns({
                     onEdit: handleEditClick,
                     onDelete: handleDeleteClick, // Pass handleDeleteClick to columns
+                    onToggleStatus:handleToggleStatus,
                   })}
                   data={filteredUsers}
                   // filterPlaceholder="Filter emails..."

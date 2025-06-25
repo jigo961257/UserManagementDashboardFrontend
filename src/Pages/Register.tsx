@@ -63,7 +63,7 @@ export default function RegisterPage() {
         navigate("/login"); // Redirect to login page after successful registration
       } else {
         // Display error message from API response, or a default one
-        toast.error(response?.message || "Registration failed. Please try again.");
+        toast.error(response?.response?.data?.message || "Registration failed. Please try again.");
       }
     } catch (err) {
       console.error("Registration error:", err);
@@ -74,7 +74,7 @@ export default function RegisterPage() {
   return (
     <div
       style={{ fontFamily: "Poppins", backgroundImage: "url('/images/login.png')" }}
-      className="min-h-screen flex items-center justify-center bg-cover bg-center" // Changed bg-red-500 to bg-cover bg-center
+      className="min-h-screen flex items-center justify-center bg-cover bg-center bg-red-500" // Changed bg-red-500 to bg-cover bg-center
     >
       <Card className="w-full max-w-[500px] rounded-[22px] bg-[#FEFDF9] px-[46px] py-[64px] border-0 shadow-lg">
         <CardContent>
