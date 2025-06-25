@@ -7,7 +7,8 @@ const PublicRoute = ({ children }: { children: ReactNode }) => {
 const role = sessionStorage.getItem("roleName");
 
   if (token && role) {
-    return <Navigate to={`/${role}/user-management`} replace />; // ⬅️ role अनुसार redirect
+    // return <Navigate to={`/${role}/user-management`} replace />; // ⬅️ 
+    return <Navigate to={`/user-management`} replace />; // ⬅️ 
   }
 
   return <>{children}</>;

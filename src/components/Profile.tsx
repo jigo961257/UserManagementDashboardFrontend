@@ -100,7 +100,7 @@ export default function ProfilePage() {
 
   if (error) {
     return (
-      <div className="p-4 text-red-600 flex items-center justify-center h-40">
+      <div className="p-4 text-red-600 flex items-center justify-center">
         <p>{error}</p>
       </div>
     );
@@ -108,7 +108,7 @@ export default function ProfilePage() {
 
   if (!profileData) {
     return (
-      <div className="p-4 text-gray-500 flex items-center justify-center h-40">
+      <div className="p-4 text-gray-500 flex items-center justify-center">
         <p>No profile data available.</p>
       </div>
     );

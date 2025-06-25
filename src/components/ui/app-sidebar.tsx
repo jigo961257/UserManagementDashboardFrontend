@@ -63,7 +63,7 @@ const logoutItem = {
 
 export function AppSidebar() {
   const location = useLocation();
-  const role = (sessionStorage.getItem("roleName") || "");
+  const role = (sessionStorage.getItem("role_name") || "");
 
 
   return (
@@ -80,9 +80,9 @@ export function AppSidebar() {
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild>
                       <a
-                         href={`/${role}/${item.url}`} 
+                         href={`/${item.url}`} 
                         className={`flex items-center space-x-2
-                          "text-white font-semibold" : "text-gray-400"
+                          "text-white font-semibold" : "text-gray-400" 
                         }`}
                                   onClick={() => {
             if (item.title === "Logout") {
@@ -133,3 +133,4 @@ export function AppSidebar() {
     </Sidebar>
   );
 }
+

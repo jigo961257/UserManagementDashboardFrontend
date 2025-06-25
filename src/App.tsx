@@ -13,11 +13,8 @@ import PublicRoute from "./Pages/PublicRoute";
 import LoginPage from "./Pages/login";
 import NotFound from "./Pages/NotFound";
 import RegisterPage from "./Pages/Register";
-import DashboardHome from "./Pages/DashboardHome";
-import UserManagementPage from "./components/ui/AdminDashboard/ShowUserMnagement";
 import RoleRoute from "./Pages/RoleRoute";
 import ShowUserManagementPage from "./components/ui/AdminDashboard/ShowUserMnagement";
-import ProfilePage from "./components/Profile";
 import ViewProfile from "./Pages/ViewProfile";
 
 
@@ -34,7 +31,7 @@ export default function App() {
           </Route>
 
         <Route path="/:role/view-profile" element={<ViewProfile />} />
-  {/* <Route path=":role/user-management" element={<UserMnagement />} /> */}
+  <Route path="/user-management" element={<UserMnagement />} />
   <Route path=":role/content-management" element={<ContentManagement />} />
   <Route path=":role/reports" element={<Reports />} />
   <Route path=":role/settings" element={<Settings />} />
@@ -65,3 +62,4 @@ export default function App() {
     </>
   );
 }
+
