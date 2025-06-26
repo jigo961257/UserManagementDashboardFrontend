@@ -4,20 +4,29 @@
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
   ],
-   "compilerOptions": {
+ 
+  "compilerOptions": {
+    "module": "esnext", // ✅ Required for import.meta
+    "target": "esnext", // Optional but recommended
+    "moduleResolution": "bundler", // Optional for Vite, helps with resolution
+
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     },
-     "lib": ["dom", "dom.iterable", "esnext"], 
+    "lib": ["dom", "dom.iterable", "esnext"],
+
     "types": [
-      "jest", // <--- ADD THIS LINE
-      "node", // <--- Also good to have if you're using Node.js globals like 'process'
-      "@testing-library/jest-dom" // <--- Essential for custom matchers like toBeInTheDocument
+      "vite/client",           // ✅ ADD THIS LINE for import.meta.env
+      "jest",                  // For Jest
+      "node",                  // For Node.js globals
+      "@testing-library/jest-dom" // For DOM matchers
     ],
-    "jsx": "react-jsx", // Or "react" if you're not using the new JSX transform
+
+    "jsx": "react-jsx",
     "esModuleInterop": true,
-    "skipLibCheck": true,
-    
+    "skipLibCheck": true
   }
+
+
 }

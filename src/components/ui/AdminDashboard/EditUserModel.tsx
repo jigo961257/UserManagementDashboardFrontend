@@ -8,11 +8,11 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-// Corrected Label import - assuming Label is from your UI library, not 'recharts'
 import { Label } from "@/components/ui/label";
 import { toast } from 'react-toastify';
-import axios from 'axios'; // Import axios for API calls
-import { Loader2 } from 'lucide-react'; // Import Loader2 for loading indicator
+import axios from 'axios';
+import { Loader2 } from 'lucide-react';
+import { updateUser } from '@/api/login/Users/action';
 
 interface User {
   id: string;
@@ -38,19 +38,15 @@ export default function EditUserModal({
   user,
   onSave,
 }: EditUserModalProps) {
-  // State for the form data, initialized to null or empty
   const [formData, setFormData] = useState<User | null>(null);
-  const [loading, setLoading] = useState(false); // New loading state for the modal's data fetch
-  const [error, setError] = useState<string | null>(null); // New error state for fetch errors
-  const [isSaving, setIsSaving] = useState(false); // New loading state for the save button
-
-  // Effect to fetch user data when the modal opens or user ID changes
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null); 
+  const [isSaving, setIsSaving] = useState(false); 
   useEffect(() => {
-    if (isOpen && user?.id) { // Only fetch if modal is open and user ID is available
+    if (isOpen && user?.id) { 
       setLoading(true);
       setError(null);
-      setFormData(null); // Clear previous form data
-
+      setFormData(null); 
       const fetchUserData = async () => {
         const token = sessionStorage.getItem("accessToken");
         try {
@@ -73,7 +69,7 @@ export default function EditUserModal({
             toast.error("Failed to load user data.");
           }
         } catch (err: any) {
-          console.error("Error fetching user data for modal:", err);
+          // console.error("Error fetching user data for modal:", err);
           setError(err.response?.data?.message || "Error fetching user data.");
           toast.error("Error fetching user data for edit.");
         } finally {
@@ -83,13 +79,12 @@ export default function EditUserModal({
 
       fetchUserData();
     } else if (!isOpen) {
-      // Reset states when modal closes
       setFormData(null);
       setLoading(false);
       setError(null);
       setIsSaving(false);
     }
-  }, [isOpen, user?.id]); // Re-run when modal opens/closes or user ID changes
+  }, [isOpen, user?.id]); 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -101,44 +96,27 @@ export default function EditUserModal({
     }
   };
 
-  const handleSave = async () => {
-    if (formData && user?.id) { // Ensure formData and user.id are available
-      setIsSaving(true); // Set saving state
-      setError(null); // Clear previous errors
+   const handleSave = async () => {
+    if (!formData) return;
 
-      const token = sessionStorage.getItem("accessToken");
-      try {
-        // Updated URL to include user.id as a path parameter for the PUT request
-        const response = await axios.put<{ status: boolean, message: string, data: User }>(
-          `http://localhost:8001/user/update/${user.id}`, // URL with ID as path parameter
-          formData, // Send the updated form data in the body
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              'Content-Type': 'application/json',
-            },
-          }
-        );
+    setIsSaving(true); 
+    setError(null);
 
-        if (response.data.status === true) {
-          toast.success("User updated successfully!");
-          onSave(response.data.data); // Pass the updated user data back to parent
-          onClose(); // Close the modal after successful save
-        } else {
-          setError(response.data.message || "Failed to update user.");
-          toast.error(response.data.message || "Failed to update user.");
-        }
-      } catch (err: any) {
-        console.error("Error updating user:", err);
-        setError(err.response?.data?.message || "An error occurred while saving.");
-        toast.error("An error occurred while saving user.");
-      } finally {
-        setIsSaving(false); // Reset saving state
-      }
+    try {
+      const updatedUserResponse = await updateUser(formData); 
+      // console.log(updatedUserResponse);
+      
+      toast.success("User updated successfully!");
+      onSave(updatedUserResponse); 
+      onClose(); 
+    } catch (err: any) {
+      setError(err.message || "An error occurred while saving."); 
+      toast.error(err.message || "An error occurred while saving user.");
+    } finally {
+      setIsSaving(false); 
     }
   };
 
-  // Do not render the modal content if it's not open or no user is provided initially
   if (!isOpen) return null;
 
   return (
@@ -196,7 +174,6 @@ export default function EditUserModal({
                   className="col-span-3"
                 />
               </div>
-              {/* You can add more fields here like roles if they are editable */}
             </div>
 
             <DialogFooter>
@@ -215,7 +192,6 @@ export default function EditUserModal({
             </DialogFooter>
           </>
         ) : (
-          // This case should ideally not be reached if isOpen and user?.id is true
           <div className="flex justify-center items-center h-48">
             <p className="text-gray-500">No user data to display.</p>
           </div>

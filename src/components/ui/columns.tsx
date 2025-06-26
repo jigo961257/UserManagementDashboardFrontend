@@ -1,71 +1,164 @@
-import { ColumnDef } from "@tanstack/react-table";
-import { User } from "./AdminDashboard/ShowUserMnagement";
-import { Button } from "@/components/ui/button"; // Assuming Button component is available here
+"use client"
+
+// import { ColumnDef } from "@tanstack/react-table";
+import { User } from "./AdminDashboard/ShowUserMnagement"; // Make sure this path is correct
+import { Button } from "@/components/ui/button";
+// import { Checkbox } from "@/components/ui/checkbox"; // Assuming Checkbox is at this path
+import type { ColumnDef } from "@tanstack/react-table";
+import { ArrowUpDown, Edit, Eye, Trash, Archive } from "lucide-react"; // Import Archive icon
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface ColumnProps {
   onEdit: (user: User) => void;
   onDelete: (user: User) => void;
-  onToggleStatus: (user: User) => void; // NEW: Add onToggleStatus handler
+  onToggleStatus: (user: User) => void; // This will now be triggered by the new Archive button
+  onView: (user: User) => void; 
 }
 
-export const getColumns = ({ onEdit, onDelete, onToggleStatus }: ColumnProps): ColumnDef<User>[] => [
+export const getColumns = ({ onEdit, onDelete, onToggleStatus, onView }: ColumnProps): ColumnDef<User>[] => [
+ 
   {
     accessorKey: "first_name",
-    header: "First Name",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          First Name
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
   },
   {
     accessorKey: "last_name",
-    header: "Last Name",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Last Name
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
   },
   {
     accessorKey: "email",
-    header: "Email",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Email
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
   },
- // src/components/columns.tsx માંથી
-{
-  accessorKey: "status",
-  header: "Status",
-  cell: ({ row }) => {
-    const user = row.original;
-    const status = user.status;
-    const isActive = status?.toLowerCase() === "active";
-    return (
-      <Button
-        // ... અન્ય પ્રોપ્સ ...
-        onClick={() => onToggleStatus(user)} // આ ક્લિક હેન્ડલર છે
-        className={`
-
-          ${isActive ? "bg-green-100 text-green-700" : "bg-gray-200 text-gray-700"}
-                    ${isActive ? "hover:bg-green-100 text-green-700" : "hover:bg-gray-200 text-gray-700"}
-
-
-        `}
-      >
-        {status ?? "NA"}
-      </Button>
-    );
-  },
-},
+ 
   {
-    header: "Action",
+        accessorKey: "actions",
+
+    header: () => {
+      return (
+        <Button
+          variant="ghost"
+        >
+          Actions
+        </Button>
+      )
+    },
     cell: ({ row }) => {
       const user = row.original;
+      const isUserActive = user.status?.toLowerCase() === "active";
+
       return (
         <div className="flex gap-2">
+         <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  onClick={() => onView(user)}
+                  variant="outline"
+                  size="sm"
+                  className="text-blue-600 hover:text-blue-800"
+                >
+                  <Eye className="h-4 w-4 mr-1" /> 
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>View</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
           <Button
             onClick={() => onEdit(user)}
-            variant="outline" // Use Button component for consistency
-            size="sm" className="bg-green-800 text-white hover:bg-green-800 hover:text-white"
+            variant="outline"
+            size="sm"
+            className="bg-green-800 text-white hover:bg-green-800 hover:text-white"
           >
-            Edit
+            <Edit className="h-4 w-4 mr-1" /> 
           </Button>
+          </TooltipTrigger>
+              <TooltipContent>
+                <p>Edit</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          {/* NEW: Archive/Unarchive Button */}
+           <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
           <Button
+            onClick={() => onToggleStatus(user)} // Call onToggleStatus from here
+            variant="outline"
+            size="sm"
+            className={isUserActive 
+                ? "bg-red-100 text-red-700 hover:bg-red-200" // Red for Archive (when active)
+                : "bg-blue-100 hover:text-red-700 hover:bg-blue-200" // Blue for Unarchive (when inactive)
+            }
+            title={isUserActive ? "Archive User" : "Unarchive User"}
+          >
+            <Archive className="h-4 w-4 mr-1" />
+          </Button>
+          </TooltipTrigger>
+              <TooltipContent>
+                <p>Archive</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+
+               <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+           <Button
             onClick={() => onDelete(user)}
-            variant="destructive" // Use Button component for consistency
+            variant="destructive"
             size="sm"
           >
-            Delete
+            <Trash className="h-4 w-4 mr-1" /> 
           </Button>
+          </TooltipTrigger>
+              <TooltipContent>
+                <p>Delete</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+         
+         
         </div>
       );
     },

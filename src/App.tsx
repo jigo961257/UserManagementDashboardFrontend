@@ -16,6 +16,7 @@ import RegisterPage from "./Pages/Register";
 import RoleRoute from "./Pages/RoleRoute";
 import ShowUserManagementPage from "./components/ui/AdminDashboard/ShowUserMnagement";
 import ViewProfile from "./Pages/ViewProfile";
+import UserDetailsPage from "./Pages/UserDetailsPage";
 
 
 export default function App() {
@@ -24,6 +25,8 @@ export default function App() {
     <>
       <BrowserRouter>
         <Routes>
+            <Route path="/user-details/:userId" element={<UserDetailsPage />} />
+
           <Route path="/" element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
   {/* <Route index element={<DashboardHome />} /> This is your main dashboard home screen */}
             <Route element={<RoleRoute allowedRoles={["SuperAdmin"]} />}>
@@ -41,7 +44,6 @@ export default function App() {
 </Route>
 
           <Route path="/login" element={<PublicRoute><LoginPage /></PublicRoute>} />
-          {/* <Route path="/register" element={<RegisterPage/>} /> */}
           <Route path="/register" element={<PublicRoute><RegisterPage /></PublicRoute>} />
 
           <Route

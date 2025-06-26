@@ -1,45 +1,50 @@
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog"; // Adjust path if necessary
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
-interface ArchiveConfirmationDialogProps {
+interface StatusConfirmationDialogProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
-  userName: string; // To display the name of the user being archived
+  userName: string;
+  currentStatus: string; // "Active" or "Inactive"
 }
 
-export default function ArchiveConfirmationDialog({
+export default function StatusConfirmationDialog({
   isOpen,
   onClose,
   onConfirm,
   userName,
-}: ArchiveConfirmationDialogProps) {
+  currentStatus,
+}: StatusConfirmationDialogProps) {
+  const newStatus = currentStatus?.toLowerCase() === "active" ? "Inactive" : "Active";
+
   return (
-    <AlertDialog open={isOpen} onOpenChange={onClose}>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Are you sure you want to archive?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This action will archive the user "<strong>{userName}</strong>".
-            They will no longer be active, but their data will be retained.
-            You can restore them later.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel onClick={onClose}>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={onConfirm} className="bg-orange-500 hover:bg-orange-600">
-            Archive
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle>Confirm Status Change</DialogTitle>
+          <DialogDescription>
+            Are you sure you want to change the status of user{" "}
+            <strong>{userName}</strong> from <strong>{currentStatus}</strong> to{" "}
+            <strong>{newStatus}</strong>?
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter className="sm:justify-start">
+          <Button type="button" variant="secondary" onClick={onClose}>
+            Cancel
+          </Button>
+          <Button type="button" onClick={onConfirm}>
+            Confirm
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

@@ -1,5 +1,6 @@
 import makeRequest from "@/config/axios_instance";
 
+
 export async function signin(data: any) {
   try {
     const response = await makeRequest({
@@ -14,6 +15,7 @@ export async function signin(data: any) {
     
     return error  }
 }
+
 export async function signup(data: any) {
   try {
     const response = await makeRequest({
@@ -72,5 +74,6 @@ export async function verifyOtp(data: any) {
     console.error("Error during sign-in:", error);
     return error  }
 }
+
 
 
