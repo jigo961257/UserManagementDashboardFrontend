@@ -12,7 +12,7 @@ interface User {
   status?: string;
 }
 
-export const fetchAllUsers = async (role_name:string): Promise<User[]> => {
+export const fetchAllUsers = async (): Promise<User[]> => {
           const token = sessionStorage.getItem("accessToken");
 
   try {
@@ -20,7 +20,7 @@ export const fetchAllUsers = async (role_name:string): Promise<User[]> => {
       endpoint: "/user/getall",
       method: "GET", 
       // isToken: true,
-            params: role_name ? { role_name } : {}, // Added params back as it was in a prior version's `fetchUsers`
+            // params: role_name ? { role_name } : {}, // Added params back as it was in a prior version's `fetchUsers`
 
        
           headers: {

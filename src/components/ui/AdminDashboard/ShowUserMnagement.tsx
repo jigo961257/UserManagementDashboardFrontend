@@ -25,6 +25,7 @@ interface User {
   status?: string; 
   profile_id?: string; 
 }
+
 interface BulkUser {
   id: string;
   first_name: string;
@@ -86,10 +87,18 @@ export default function ShowUserManagementPage() {
         })) as User[]; 
 
       } else {
-        fetchedUsers = await fetchAllUsers(role_name === "users" ? "" : role_name);
+        // fetchedUsers = await fetchAllUsers(role_name === "users" ? "" : role_name);
+        const allUsers = await fetchAllUsers();
+      if (role_name === "users") {
+        fetchedUsers = allUsers;
+      } else {
+        fetchedUsers = allUsers.filter(user => user.roles?.name === role_name);
       }
+    }
+    setUsers(fetchedUsers);
+      
 
-      setUsers(fetchedUsers);
+      
     } catch (error) {
       // console.error("Error fetching users for table:", error);
       setUsers([]);
@@ -197,6 +206,7 @@ const handleSaveUser = () => {
           "Content-Type": "multipart/form-data",
         },
       });
+      
       
       toast.success("CSV uploaded successfully!");
       setUploadCsvStatus("Upload successful!"); 
