@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { toast } from 'react-toastify';
-import { useNavigate } from "react-router-dom"; 
+// import { useNavigate } from "react-router-dom"; 
 import { DataTable } from "../datatable";
 import { getColumns } from "../columns"; 
 import EditUserModal from "./EditUserModel";
@@ -13,7 +13,7 @@ import { Button } from "../button";
 import type { ColumnDef } from "@tanstack/react-table";
 import axios from "axios";
 
-interface User {
+export interface User {
   id: string;
   first_name: string;
   last_name: string;

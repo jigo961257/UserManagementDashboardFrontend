@@ -1,7 +1,9 @@
 "use client"
 
 // import { ColumnDef } from "@tanstack/react-table";
-import { User } from "./AdminDashboard/ShowUserMnagement"; // Make sure this path is correct
+// import { ColumnDef } from "@tanstack/react-table";
+import type { User } from "./AdminDashboard/ShowUserMnagement"; // Make sure this path is correct
+ // Make sure this path is correct
 import { Button } from "@/components/ui/button";
 // import { Checkbox } from "@/components/ui/checkbox"; // Assuming Checkbox is at this path
 import type { ColumnDef } from "@tanstack/react-table";

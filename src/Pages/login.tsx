@@ -277,7 +277,7 @@ const disableOtpForm = !!watch("email") || !!watch("password") ; // Disable rese
                       onKeyDown={(e) => handleOtpKeyDown(index, e)}
                       className="w-12 h-12 text-center text-lg"
                       maxLength={1}
-                      ref={(el) => (otpRefs.current[index] = el)}
+                      ref={(el) => { otpRefs.current[index] = el; }}
                     />
                   ))}
                 </div>
