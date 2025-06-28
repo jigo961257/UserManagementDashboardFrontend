@@ -72,7 +72,7 @@ export default function StateDistribution() {
               label={({ value }) => value}
               labelLine={false}
             >
-              {data.map((entry, index) => (
+              {data.map((_, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>

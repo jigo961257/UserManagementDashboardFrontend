@@ -12,8 +12,14 @@ import { DashboardData } from "@/api/login/action"; // 🟠 Replace with actual 
 export default function TrendingContent() {
   const [activeTab, setActiveTab] = useState<"posts" | "videos">("posts");
 
-  const [postItems, setPostItems] = useState([]);
-  const [videoItems, setVideoItems] = useState([]);
+  type TrendingItem = {
+    image: string;
+    title: string;
+    // Add other properties as needed
+  };
+
+  const [postItems, setPostItems] = useState<TrendingItem[]>([]);
+  const [videoItems, setVideoItems] = useState<TrendingItem[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

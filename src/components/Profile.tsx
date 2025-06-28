@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { User } from "lucide-react";
@@ -27,7 +27,7 @@ interface UserProfileData {
 export default function ProfilePage() {
   const navigate = useNavigate();
   const [userRole, setUserRole] = useState<string | null>(null);
-  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+  const [_, setCurrentUserId] = useState<string | null>(null);
   const [profileData, setProfileData] = useState<UserProfileData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -51,6 +51,7 @@ export default function ProfilePage() {
       );
       console.log("API Response:", response.data);
       // API રિસ્પોન્સમાં ડેટા પ્રોપર્ટી છે કે નહીં તે તપાસો
+     //@ts-ignore
       setProfileData(response.data.data || response.data); // જો data પ્રોપર્ટી હોય તો તે વાપરો, નહીંતર સીધું response.data
     } catch (err) {
       console.error("Error fetching profile data:", err);

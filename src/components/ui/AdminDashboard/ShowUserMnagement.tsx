@@ -201,7 +201,7 @@ const handleSaveUser = () => {
     formData.append("file", selectedFile); 
 
     try {
-      const response = await axios.post(import.meta.env.VITE_API_BASE_URL+"/user/upload-csv", formData, {
+      await axios.post(import.meta.env.VITE_API_BASE_URL+"/user/upload-csv", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
