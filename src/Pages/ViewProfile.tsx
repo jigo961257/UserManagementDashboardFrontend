@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -50,7 +50,8 @@ const ViewProfile = () => {
         }
       );
 
-      console.log("ViewProfile - API Response data:", response.data.data);
+      // console.log("ViewProfile - API Response data:", response.data.data);
+      // @ts-ignore
       setProfileData(response.data.data);
 
     } catch (err) {
@@ -107,7 +108,7 @@ const ViewProfile = () => {
     );
   }
 
-  const currentRole = profileData.roleName;
+  // const currentRole = profileData.roleName;
   const roleName=sessionStorage.getItem("roleName")
 
   return (

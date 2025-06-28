@@ -6,7 +6,7 @@ import StateDistribution from "@/components/ui/Dashboard/StateDistribution";
 import UserDistribution from "@/components/ui/Dashboard/UserDistribution";
 
 export default function DashboardHome() {
-  const [roleName, setRoleName] = useState<string | null>("");
+  const [_, setRoleName] = useState<string | null>("");
 
   useEffect(() => {
     const storedRole = sessionStorage.getItem("role_name");
