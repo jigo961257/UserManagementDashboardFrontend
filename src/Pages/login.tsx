@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import { signin, sendOtp, verifyOtp } from "@/api/login/action";
 import { Eye, EyeOff } from "lucide-react";
@@ -13,8 +13,6 @@ import { Eye, EyeOff } from "lucide-react";
 const loginSchema = z.object({
   email: z.string().email("Invalid email"),
   password: z.string().min(6, "Password must be at least 6 characters"),
-  role: z.string().min(1, "Please select a role"),
-
 });
 
 const resendSchema = z.object({
@@ -33,11 +31,9 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const otpRefs = useRef<Array<HTMLInputElement | null>>([]);
 
-  // for disabled
+  
   const [resendEmail, setResendEmail] = useState("");
  
-
-
   const {
     register,
     handleSubmit,
@@ -63,18 +59,21 @@ const onSubmit = async (data: any) => {
   
     const payload = {
       ...data,
-      roleName: data.role, // if backend expects `roleName`
+     
     };
    
     const response = await signin(payload);
     console.log("login data", response);
 
     if (response?.status === true) {
-      sessionStorage.setItem("accessToken", response?.data?.token);
-      sessionStorage.setItem("roleName", response?.data?.roleName);
-      toast.success(response?.message);
-      navigate("/user-management");
-    } else {
+  const role = response?.data?.roleName; // lowercase for consistency
+  sessionStorage.setItem("accessToken", response?.data?.token);
+  sessionStorage.setItem("role_name", response?.data?.role_name);
+sessionStorage.setItem("user_id", response?.data?.user_id);
+  toast.success(response?.message);
+  navigate(`/${role}/user-management`); // 👈 Dynamic route based on role
+}
+ else {
       toast.error(response?.response.data?.message);
     }
   } catch (err: any) {
@@ -85,16 +84,9 @@ const onSubmit = async (data: any) => {
 
 const handleResendOtp = async (data: any) => {
   try {
-    const roleValue = watch("role");
-
-    if (!roleValue) {
-      toast.error("Please select a role before requesting OTP");
-      return;
-    }
-
+   
     const payload = {
       ...data,
-      roleName: roleValue,
     };
 
     console.log(payload);
@@ -123,19 +115,13 @@ const handleResendOtp = async (data: any) => {
   }
 
   try {
-    const roleName = watch("role");
-    if (!roleName) {
-      setOtpError("Please select a role before verifying OTP");
-      return;
-    }
-
-    const response = await verifyOtp({ email: emailForOtp, otp: enteredOtp, roleName });
+    const response = await verifyOtp({ email: emailForOtp, otp: enteredOtp});
 
     if (response?.status === true) {
       sessionStorage.setItem("accessToken", response?.data?.token);
-      sessionStorage.setItem("roleName", response?.data?.roleName);
+      sessionStorage.setItem("role_name", response?.data?.role_name);
       toast.success(response?.message);
-      navigate("/user-management");
+      navigate(`/user-management`);
     } else {
       const errorMessage = response?.response?.data?.message || "Invalid OTP";
       setOtpError(errorMessage);
@@ -220,22 +206,7 @@ const disableOtpForm = !!watch("email") || !!watch("password") ; // Disable rese
 
             <div>
  
-    <select
-    {...register("role")}
-    className="w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-700 "
-    defaultValue=""
-  >
-     <option value="" disabled>
-      Select Role
-    </option>
-    <option value="Admin">Admin</option>
-    <option value="Teacher">Teacher</option>
-    <option value="Student">Student</option>
-    <option value="Parent">Parent</option>
-  </select>
-  {errors.role && (
-    <p className="text-red-500 text-sm">{errors.role.message}</p>
-  )}
+  
 </div>
 
 
@@ -248,8 +219,19 @@ const disableOtpForm = !!watch("email") || !!watch("password") ; // Disable rese
             >
               {isSubmitting ? "Logging in..." : "Login"}
             </Button>
+            
           </form>
           <div className="text-center font-[700] text-[14px]">OR</div>
+          <div className="text-center mt-4 text-sm text-gray-600">
+  Don't have an account?{" "}
+  <Link
+    to="/register"
+    className="text-[#FE6C01] font-semibold hover:underline"
+  >
+    Register here
+  </Link>
+</div>
+
           <div className="mt-2  pt-2 space-y-3">
             {!showOtp && (
               <form
@@ -318,3 +300,4 @@ const disableOtpForm = !!watch("email") || !!watch("password") ; // Disable rese
     </div>
   );
 }
+

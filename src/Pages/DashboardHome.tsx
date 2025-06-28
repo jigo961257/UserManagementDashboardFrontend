@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import Cards from "@/components/ui/Dashboard/Cards";
 import TrendingContent from "@/components/ui/Dashboard/TrendingContent";
@@ -8,7 +9,7 @@ export default function DashboardHome() {
   const [roleName, setRoleName] = useState<string | null>("");
 
   useEffect(() => {
-    const storedRole = sessionStorage.getItem("roleName");
+    const storedRole = sessionStorage.getItem("role_name");
     setRoleName(storedRole);
   }, []);
 
@@ -16,7 +17,7 @@ export default function DashboardHome() {
     <>
       <div className="flex justify-between p-5">
         <div className="text-xl font-semibold">
-          Welcome{roleName ? `, ${roleName}` : ""}
+          Welcome
         </div>
         <div className="p-3 rounded shadow-md" style={{ background: "#FBFBFB" }}>
           <p className="font-bold text-xs text-gray-800">
@@ -31,3 +32,4 @@ export default function DashboardHome() {
     </>
   );
 }
+

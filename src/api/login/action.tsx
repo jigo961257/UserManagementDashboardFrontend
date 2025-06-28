@@ -1,5 +1,6 @@
 import makeRequest from "@/config/axios_instance";
 
+
 export async function signin(data: any) {
   try {
     const response = await makeRequest({
@@ -13,6 +14,22 @@ export async function signin(data: any) {
     console.error("Error during sign-in:", error);
     
     return error  }
+}
+
+export async function signup(data: any) {
+  try {
+    const response = await makeRequest({
+      endpoint: "/auth/register", // Replace with your actual endpoint
+      method: "POST",
+      data,
+      isToken: false,
+    });
+
+    return response?.data;
+  } catch (error) {
+    console.error("Error during sign-up:", error);
+    return error;
+  }
 }
 
 export async function DashboardData() {
@@ -57,5 +74,6 @@ export async function verifyOtp(data: any) {
     console.error("Error during sign-in:", error);
     return error  }
 }
+
 
 

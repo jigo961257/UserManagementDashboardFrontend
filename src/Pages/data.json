@@ -1,0 +1,30 @@
+[
+  {
+    "id": "user_1",
+    "firstName": "urmi",
+    "lastName": "viradiya",
+    "email": "urmi@gmail.com",
+    "password": "urmi@123"
+  },
+  {
+    "id": "user_2",
+    "firstName": "Jane",
+    "lastName": "Smith",
+    "email": "jane.smith@example.com",
+    "password": "password123"
+  },
+  {
+    "id": "user_3",
+    "firstName": "Admin",
+    "lastName": "User",
+    "email": "admin@example.com",
+    "password": "password123"
+  },
+  {
+    "id": "user_4",
+    "firstName": "Super",
+    "lastName": "Admin",
+    "email": "SuperAdmin@gmail.com",
+    "password": "superadmin@123"
+  }
+]

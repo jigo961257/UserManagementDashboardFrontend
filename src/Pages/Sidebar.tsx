@@ -5,12 +5,15 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { useLocation } from "react-router-dom";
 import DashboardHome from "./DashboardHome";
 import { Outlet } from "react-router-dom";
+import ShowUserManagementPage from "@/components/ui/AdminDashboard/ShowUserMnagement";
 
 export default function DashboardLayout() {
   const location = useLocation();
 
-  const showDashboardHome = location.pathname === "/user-management" || location.pathname === "/";
+  const role = sessionStorage.getItem("role_name");
 
+const showDashboardHome =
+  (location.pathname === `/user-management` || location.pathname === "/")
 
   return (
     <SidebarProvider>
@@ -18,9 +21,15 @@ export default function DashboardLayout() {
         <AppSidebar />
 
         <main className="flex-1 p-4 overflow-auto">
-          <SidebarTrigger className="mb-4" />
+        <div className="flex justify-between items-center mb-4">
+  <SidebarTrigger />
+  {/* <ProfilePage /> */}
+</div>
 
-          {showDashboardHome && <DashboardHome />}
+
+      {showDashboardHome && (
+  role === "SuperAdmin" ? <ShowUserManagementPage /> : <DashboardHome />
+)}
 
           <Outlet />
         </main>
@@ -28,3 +37,4 @@ export default function DashboardLayout() {
     </SidebarProvider>
   );
 }
+
