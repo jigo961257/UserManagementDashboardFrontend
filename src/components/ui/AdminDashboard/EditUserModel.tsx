@@ -52,7 +52,7 @@ export default function EditUserModal({
         try {
           // Changed to axios.get and included user.id directly in the URL (path parameter)
           const response = await axios.get<{ data: User }>(
-            `http://localhost:8001/user/get/${user.id}`, // URL with ID as path parameter
+            import.meta.env.VITE_API_BASE_URL+`/user/get/${user.id}`, // URL with ID as path parameter
             {
               headers: {
                 Authorization: `Bearer ${token}`,

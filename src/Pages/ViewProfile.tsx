@@ -40,7 +40,7 @@ const ViewProfile = () => {
       const token = sessionStorage.getItem("accessToken");
 
       const response = await axios.post<UserProfileData>(
-        `http://localhost:8001/user/get/${id}`,
+        import.meta.env.VITE_API_BASE_URL + `/user/get/${id}`,
         { "roleName": roleName },
         {
           headers: {
